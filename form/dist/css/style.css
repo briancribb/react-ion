@@ -7299,12 +7299,6 @@ html {
   border-top: 1px solid #337ab7;
   padding: 1rem; }
 
-@media (min-width: 768px) {
-  body {
-    padding-top: 0; }
-  .site-container, .main-footer {
-    padding-right: 9rem; } }
-
 .apply-rhythm {
   margin-bottom: 1rem !important; }
 
