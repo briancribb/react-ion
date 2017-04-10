@@ -32,7 +32,7 @@ function getOptionIndex(args) {
 
 // Lint Task
 gulp.task('lint', function() {
-	return gulp.src('js/theme/*.js')
+	return gulp.src('scripts/theme/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'));
 });
@@ -42,18 +42,17 @@ gulp.task('lint', function() {
 
 // Compile Our Sass
 gulp.task('sass', function() {
-	console.log('sass: ' + getOptionIndex(process.argv) );
+	console.log('*** sass: ' + getOptionIndex(process.argv) );
 	var strFolder = getOptionIndex(process.argv);
 
 	gulp.src([
-			strFolder+'css/ie10-viewport-bug-workaround.css',
-			strFolder+'css/style.scss'
+			strFolder+'styles/styles.scss'
 		])
 		.pipe(sass())
-		.pipe(gulp.dest(strFolder+'dist/css'))
-		.pipe(rename('style.min.css'))
+		.pipe(gulp.dest(strFolder+'dist/styles'))
+		.pipe(rename('styles.min.css'))
 		.pipe(cleanCSS())
-		.pipe(gulp.dest(strFolder+'dist/css'));
+		.pipe(gulp.dest(strFolder+'dist/styles'));
 
 });
 
@@ -64,15 +63,17 @@ gulp.task('scripts', function() {
 
 	return gulp
 		.src([
-			strFolder+'js/ie10-viewport-bug-workaround.js',
-			strFolder+'js/custom.js'
+			'vendor/ie10/ie10-viewport-bug-workaround.js',
+			'vendor/react-15.3.2/build/react.min.js',
+			'vendor/react-15.3.2/build/react-dom.min.js',
+			strFolder+'scripts/custom.js'
 		])
 		.pipe(concat('all.js'))
-		.pipe(gulp.dest(strFolder+'dist/js'))
+		.pipe(gulp.dest(strFolder+'dist/scripts'))
 		.pipe(rename('all.min.js'))
 		.pipe(uglify())
 		//.pipe(uglify().on('error', gutil.log))
-		.pipe(gulp.dest(strFolder+'dist/js'));
+		.pipe(gulp.dest(strFolder+'dist/scripts'));
 });
 
 
@@ -82,10 +83,10 @@ gulp.task('watch', function() {
 	console.log('watch: ' + getOptionIndex(process.argv) );
 	var strFolder = getOptionIndex(process.argv);
 	//gulp.watch(strFolder+'js/theme/*.js', ['lint', 'scripts']);
-	gulp.watch(strFolder+'js/theme/*.js', ['scripts-deferred']);
-	gulp.watch(strFolder+'css/_partials/*.scss', ['sass']);
-	gulp.watch(strFolder+'css/_custom.scss', ['sass']);
-	gulp.watch(strFolder+'css/style.scss', ['sass']);
+	gulp.watch(strFolder+'scripts/theme/*.js', ['scripts-deferred']);
+	gulp.watch(strFolder+'styles/_partials/*.scss', ['sass']);
+	gulp.watch(strFolder+'styles/_custom.scss', ['sass']);
+	gulp.watch(strFolder+'styles/styles.scss', ['sass']);
 });
 
 
