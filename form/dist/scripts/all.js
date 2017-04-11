@@ -1,27 +1,3 @@
-/*!
- * IE10 viewport hack for Surface/desktop Windows 8 bug
- * Copyright 2014-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-
-// See the Getting Started docs for more information:
-// http://getbootstrap.com/getting-started/#support-ie10-width
-
-(function () {
-  'use strict';
-
-  if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-    var msViewportStyle = document.createElement('style')
-    msViewportStyle.appendChild(
-      document.createTextNode(
-        '@-ms-viewport{width:auto!important}'
-      )
-    )
-    document.querySelector('head').appendChild(msViewportStyle)
-  }
-
-})();
-
 /**
  * React v15.3.2
  *
@@ -50,6 +26,345 @@ var t=a(e);if(t.window===t)return t;var n=t.ownerDocument;return n?n.defaultView
  *
  */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e(require("react"));else if("function"==typeof define&&define.amd)define(["react"],e);else{var f;f="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,f.ReactDOM=e(f.React)}}(function(e){return e.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED});
+/*!
+ * IE10 viewport hack for Surface/desktop Windows 8 bug
+ * Copyright 2014-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// See the Getting Started docs for more information:
+// http://getbootstrap.com/getting-started/#support-ie10-width
+
+(function () {
+  'use strict';
+
+  if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+    var msViewportStyle = document.createElement('style')
+    msViewportStyle.appendChild(
+      document.createTextNode(
+        '@-ms-viewport{width:auto!important}'
+      )
+    )
+    document.querySelector('head').appendChild(msViewportStyle)
+  }
+
+})();
+
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Thing = function (_React$Component) {
+	_inherits(Thing, _React$Component);
+
+	// In case we need initial states, which we will because we're waiting for data.
+	function Thing() {
+		_classCallCheck(this, Thing);
+
+		// Gotta call this first when doing a constructor.
+		var _this = _possibleConstructorReturn(this, (Thing.__proto__ || Object.getPrototypeOf(Thing)).call(this));
+		//console.log('constructor()');
+
+
+		_this.state = {
+			test: false
+		};
+		//this._getData();
+		console.log('this.state');
+		console.log(_this.state);
+		return _this;
+	}
+
+	/*
+ Showing a download icon while the assets load, and then a round arrow spinner while the data loads. When the "loading" 
+ class is removed, the initial loader container is hidden and the Timeline app container is shown. 
+ */
+
+
+	_createClass(Thing, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			$('body').removeClass('loading');
+			console.log('componentDidMount()');
+		}
+
+		/*
+  After the app updates, we run some jQuery to put every other entry on the right side. This could have been done by 
+  looping through the entries array and checking to see who's visible, but we're already paying for jQuery in our page 
+  load so we should just go ahead and use it where appropriate.
+  */
+
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			if (this.state.initialized) {
+				//this._alternateFloats();
+			}
+			console.log('componentDidUpdate()');
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var markup = null;
+			/*
+   if (this.state.initialized) {
+   	const entries = this._getEntries();
+   	markup = 
+   		<div id="timeline">
+   			<TLToggles sources={this.state.sources} updateSource={this._updateSource.bind(this)} />
+   			<ul id="tl-list" className={"tl-list " + this.state.parentClasses}>
+   				{entries}
+   			</ul>
+   		</div>
+   } else {
+   	markup = 
+   		<div className="page-load text-center">
+   			<div id="page-load-spinner" className="page-load-spinner"><span className="glyphicon glyphicon-repeat trans-spin" aria-hidden="true"></span></div>
+   			<p>Loading Timeline Events...</p>
+   		</div>
+   }
+   */
+			markup = React.createElement(
+				'form',
+				null,
+				React.createElement(
+					'h2',
+					null,
+					'Form Element'
+				),
+				React.createElement(
+					'p',
+					null,
+					'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui.'
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'label',
+						{ 'for': 'text_field' },
+						'Text Field:'
+					),
+					React.createElement('br', null),
+					React.createElement('input', { type: 'text', id: 'text_field' })
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'label',
+						{ 'for': 'text_area' },
+						'Text Area:'
+					),
+					React.createElement('br', null),
+					React.createElement('textarea', { id: 'text_area' })
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'label',
+						{ 'for': 'select_element' },
+						'Select Element:'
+					),
+					React.createElement('br', null),
+					React.createElement(
+						'select',
+						{ name: 'select_element' },
+						React.createElement(
+							'optgroup',
+							{ label: 'Option Group 1' },
+							React.createElement(
+								'option',
+								{ value: '1' },
+								'Option 1'
+							),
+							React.createElement(
+								'option',
+								{ value: '2' },
+								'Option 2'
+							),
+							React.createElement(
+								'option',
+								{ value: '3' },
+								'Option 3'
+							)
+						),
+						React.createElement(
+							'optgroup',
+							{ label: 'Option Group 2' },
+							React.createElement(
+								'option',
+								{ value: '1' },
+								'Option 1'
+							),
+							React.createElement(
+								'option',
+								{ value: '2' },
+								'Option 2'
+							),
+							React.createElement(
+								'option',
+								{ value: '3' },
+								'Option 3'
+							)
+						)
+					)
+				),
+				React.createElement(
+					'h3',
+					null,
+					'Checkboxes and Radio Buttons'
+				),
+				React.createElement(
+					'div',
+					{ className: 'checkbox' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement('input', { type: 'checkbox', value: '' }),
+						'Option one is this and that\u2014be sure to include why it\u2019s great'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'checkbox disabled' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement('input', { type: 'checkbox', value: '', disabled: true }),
+						'Option two is disabled'
+					)
+				),
+				React.createElement(
+					'h4',
+					null,
+					'Radio Buttons'
+				),
+				React.createElement(
+					'div',
+					{ className: 'radio' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios1', value: 'option1', checked: true }),
+						'Option one is this and that\u2014be sure to include why it\u2019s great'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'radio' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios2', value: 'option2' }),
+						'Option two can be something else and selecting it will deselect option one'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'radio disabled' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios3', value: 'option3', disabled: true }),
+						'Option three is disabled'
+					)
+				),
+				React.createElement(
+					'h4',
+					null,
+					'Inline Checkboxes'
+				),
+				React.createElement(
+					'label',
+					{ className: 'checkbox-inline' },
+					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox1', value: 'option1' }),
+					' 1'
+				),
+				React.createElement(
+					'label',
+					{ className: 'checkbox-inline' },
+					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox2', value: 'option2' }),
+					' 2'
+				),
+				React.createElement(
+					'label',
+					{ className: 'checkbox-inline' },
+					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox3', value: 'option3' }),
+					' 3'
+				),
+				React.createElement(
+					'h4',
+					null,
+					'Inline Radio Buttons'
+				),
+				React.createElement(
+					'label',
+					{ className: 'radio-inline' },
+					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio1', value: 'option1' }),
+					' 1'
+				),
+				React.createElement(
+					'label',
+					{ className: 'radio-inline' },
+					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio2', value: 'option2' }),
+					' 2'
+				),
+				React.createElement(
+					'label',
+					{ className: 'radio-inline' },
+					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio3', value: 'option3' }),
+					' 3'
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'label',
+						{ 'for': 'password' },
+						'Password:'
+					)
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement('input', { type: 'password', className: 'password', name: 'password' })
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'label',
+						{ 'for': 'file' },
+						'File Input:'
+					),
+					React.createElement('br', null),
+					React.createElement('input', { type: 'file', className: 'file', name: 'file' })
+				),
+				React.createElement(
+					'p',
+					null,
+					React.createElement('input', { className: 'button', type: 'reset', value: 'Clear' }),
+					' ',
+					React.createElement('input', { className: 'button', type: 'submit', value: 'Submit' })
+				)
+			);
+
+			return markup;
+		}
+	}]);
+
+	return Thing;
+}(React.Component);
+
+ReactDOM.render(React.createElement(Thing, null), document.getElementById('test-app'));
 ;var SITE = SITE || (function(){
 	var APP = {
 		resizeTasks : [],

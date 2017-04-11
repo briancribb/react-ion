@@ -7,7 +7,7 @@ var jshint = require('gulp-jshint');
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	cleanCSS = require('gulp-clean-css'),
-	//gutil = require('gulp-util'),
+	gutil = require('gulp-util'),
 	rename = require('gulp-rename'),
 	babel = require('gulp-babel');
 
@@ -63,19 +63,24 @@ gulp.task('scripts', function() {
 
 	return gulp
 		.src([
-			'vendor/ie10/ie10-viewport-bug-workaround.js',
 			'vendor/react-15.3.2/build/react.min.js',
 			'vendor/react-15.3.2/build/react-dom.min.js',
+			'vendor/ie10/ie10-viewport-bug-workaround.js',
+			strFolder+'scripts/components.js',
 			strFolder+'scripts/custom.js'
 		])
+		.pipe( babel({
+			only: ['scripts/components.js'],
+			presets: ['react', 'es2015'],
+			compact:false
+		}) )
 		.pipe(concat('all.js'))
 		.pipe(gulp.dest(strFolder+'dist/scripts'))
 		.pipe(rename('all.min.js'))
-		.pipe(uglify())
-		//.pipe(uglify().on('error', gutil.log))
+		//.pipe(uglify())
+		.pipe(uglify().on('error', gutil.log))
 		.pipe(gulp.dest(strFolder+'dist/scripts'));
 });
-
 
 
 // Watch Files For Changes
@@ -83,7 +88,7 @@ gulp.task('watch', function() {
 	console.log('watch: ' + getOptionIndex(process.argv) );
 	var strFolder = getOptionIndex(process.argv);
 	//gulp.watch(strFolder+'js/theme/*.js', ['lint', 'scripts']);
-	gulp.watch(strFolder+'scripts/theme/*.js', ['scripts-deferred']);
+	gulp.watch(strFolder+'scripts/*.js', ['scripts']);
 	gulp.watch(strFolder+'styles/_partials/*.scss', ['sass']);
 	gulp.watch(strFolder+'styles/_custom.scss', ['sass']);
 	gulp.watch(strFolder+'styles/styles.scss', ['sass']);
