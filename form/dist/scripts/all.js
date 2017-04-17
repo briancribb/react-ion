@@ -134,229 +134,206 @@ var Thing = function (_React$Component) {
 				'form',
 				null,
 				React.createElement(
-					'h2',
-					null,
-					'Form Element'
-				),
-				React.createElement(
-					'p',
-					null,
-					'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui.'
-				),
-				React.createElement(
-					'p',
-					null,
+					'div',
+					{ className: 'form-group' },
 					React.createElement(
 						'label',
-						{ 'for': 'text_field' },
-						'Text Field:'
+						{ 'for': 'exampleInputEmail1' },
+						'Email address'
 					),
-					React.createElement('br', null),
-					React.createElement('input', { type: 'text', id: 'text_field' })
+					React.createElement('input', { type: 'email', className: 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: 'Enter email' }),
+					React.createElement(
+						'small',
+						{ id: 'emailHelp', className: 'form-text text-muted' },
+						'We\u2019ll never share your email with anyone else.'
+					)
 				),
 				React.createElement(
-					'p',
-					null,
+					'div',
+					{ className: 'form-group' },
 					React.createElement(
 						'label',
-						{ 'for': 'text_area' },
-						'Text Area:'
+						{ 'for': 'exampleInputPassword1' },
+						'Password'
 					),
-					React.createElement('br', null),
-					React.createElement('textarea', { id: 'text_area' })
+					React.createElement('input', { type: 'password', className: 'form-control', id: 'exampleInputPassword1', placeholder: 'Password' })
 				),
 				React.createElement(
-					'p',
-					null,
+					'div',
+					{ className: 'form-group' },
 					React.createElement(
 						'label',
-						{ 'for': 'select_element' },
-						'Select Element:'
+						{ 'for': 'exampleSelect1' },
+						'Example select'
 					),
-					React.createElement('br', null),
 					React.createElement(
 						'select',
-						{ name: 'select_element' },
+						{ className: 'form-control', id: 'exampleSelect1' },
 						React.createElement(
-							'optgroup',
-							{ label: 'Option Group 1' },
-							React.createElement(
-								'option',
-								{ value: '1' },
-								'Option 1'
-							),
-							React.createElement(
-								'option',
-								{ value: '2' },
-								'Option 2'
-							),
-							React.createElement(
-								'option',
-								{ value: '3' },
-								'Option 3'
-							)
+							'option',
+							null,
+							'1'
 						),
 						React.createElement(
-							'optgroup',
-							{ label: 'Option Group 2' },
+							'option',
+							null,
+							'2'
+						),
+						React.createElement(
+							'option',
+							null,
+							'3'
+						),
+						React.createElement(
+							'option',
+							null,
+							'4'
+						),
+						React.createElement(
+							'option',
+							null,
+							'5'
+						)
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						{ 'for': 'exampleSelect2' },
+						'Example multiple select'
+					),
+					React.createElement(
+						'select',
+						{ multiple: true, className: 'form-control', id: 'exampleSelect2' },
+						React.createElement(
+							'option',
+							null,
+							'1'
+						),
+						React.createElement(
+							'option',
+							null,
+							'2'
+						),
+						React.createElement(
+							'option',
+							null,
+							'3'
+						),
+						React.createElement(
+							'option',
+							null,
+							'4'
+						),
+						React.createElement(
+							'option',
+							null,
+							'5'
+						)
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						{ 'for': 'exampleTextarea' },
+						'Example textarea'
+					),
+					React.createElement('textarea', { className: 'form-control', id: 'exampleTextarea', rows: '3' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						{ 'for': 'exampleInputFile' },
+						'File input'
+					),
+					React.createElement('input', { type: 'file', className: 'form-control-file', id: 'exampleInputFile', 'aria-describedby': 'fileHelp' }),
+					React.createElement(
+						'small',
+						{ id: 'fileHelp', className: 'form-text text-muted' },
+						'This is some placeholder block-level help text for the above input. It\u2019s a bit lighter and easily wraps to a new line.'
+					)
+				),
+				React.createElement(
+					'fieldset',
+					{ className: 'form-group' },
+					React.createElement(
+						'legend',
+						null,
+						'Radio buttons'
+					),
+					React.createElement(
+						'div',
+						{ className: 'form-check' },
+						React.createElement(
+							'label',
+							{ className: 'form-check-label' },
+							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios1', value: 'option1', checked: true }),
 							React.createElement(
-								'option',
-								{ value: '1' },
-								'Option 1'
-							),
+								'span',
+								null,
+								'Option one is this and that \u2014 be sure to include why it\u2019s great'
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'form-check' },
+						React.createElement(
+							'label',
+							{ className: 'form-check-label' },
+							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios2', value: 'option2' }),
 							React.createElement(
-								'option',
-								{ value: '2' },
-								'Option 2'
-							),
+								'span',
+								null,
+								'Option two can be something else and selecting it will deselect option one'
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'form-check disabled' },
+						React.createElement(
+							'label',
+							{ className: 'form-check-label' },
+							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios3', value: 'option3', disabled: true }),
 							React.createElement(
-								'option',
-								{ value: '3' },
-								'Option 3'
+								'span',
+								null,
+								'Option three is disabled'
 							)
 						)
 					)
 				),
 				React.createElement(
-					'h3',
-					null,
-					'Checkboxes and Radio Buttons'
-				),
-				React.createElement(
 					'div',
-					{ className: 'checkbox' },
+					{ className: 'form-check' },
 					React.createElement(
 						'label',
-						null,
-						React.createElement('input', { type: 'checkbox', value: '' }),
-						'Option one is this and that\u2014be sure to include why it\u2019s great'
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'checkbox disabled' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement('input', { type: 'checkbox', value: '', disabled: true }),
-						'Option two is disabled'
-					)
-				),
-				React.createElement(
-					'h4',
-					null,
-					'Radio Buttons'
-				),
-				React.createElement(
-					'div',
-					{ className: 'radio' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios1', value: 'option1', checked: true }),
-						'Option one is this and that\u2014be sure to include why it\u2019s great'
+						{ className: 'form-check-label' },
+						React.createElement('input', { type: 'checkbox', className: 'form-check-input' }),
+						React.createElement(
+							'span',
+							null,
+							'Check me out'
+						)
 					)
 				),
 				React.createElement(
 					'div',
-					{ className: 'radio' },
+					{ className: 'form-group' },
 					React.createElement(
-						'label',
-						null,
-						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios2', value: 'option2' }),
-						'Option two can be something else and selecting it will deselect option one'
+						'button',
+						{ type: 'submit', className: 'btn btn-primary' },
+						'Submit'
 					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'radio disabled' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement('input', { type: 'radio', name: 'optionsRadios', id: 'optionsRadios3', value: 'option3', disabled: true }),
-						'Option three is disabled'
-					)
-				),
-				React.createElement(
-					'h4',
-					null,
-					'Inline Checkboxes'
-				),
-				React.createElement(
-					'label',
-					{ className: 'checkbox-inline' },
-					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox1', value: 'option1' }),
-					' 1'
-				),
-				React.createElement(
-					'label',
-					{ className: 'checkbox-inline' },
-					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox2', value: 'option2' }),
-					' 2'
-				),
-				React.createElement(
-					'label',
-					{ className: 'checkbox-inline' },
-					React.createElement('input', { type: 'checkbox', id: 'inlineCheckbox3', value: 'option3' }),
-					' 3'
-				),
-				React.createElement(
-					'h4',
-					null,
-					'Inline Radio Buttons'
-				),
-				React.createElement(
-					'label',
-					{ className: 'radio-inline' },
-					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio1', value: 'option1' }),
-					' 1'
-				),
-				React.createElement(
-					'label',
-					{ className: 'radio-inline' },
-					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio2', value: 'option2' }),
-					' 2'
-				),
-				React.createElement(
-					'label',
-					{ className: 'radio-inline' },
-					React.createElement('input', { type: 'radio', name: 'inlineRadioOptions', id: 'inlineRadio3', value: 'option3' }),
-					' 3'
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement(
-						'label',
-						{ 'for': 'password' },
-						'Password:'
-					)
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement('input', { type: 'password', className: 'password', name: 'password' })
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement(
-						'label',
-						{ 'for': 'file' },
-						'File Input:'
-					),
-					React.createElement('br', null),
-					React.createElement('input', { type: 'file', className: 'file', name: 'file' })
-				),
-				React.createElement(
-					'p',
-					null,
-					React.createElement('input', { className: 'button', type: 'reset', value: 'Clear' }),
-					' ',
-					React.createElement('input', { className: 'button', type: 'submit', value: 'Submit' })
 				)
 			);
-
 			return markup;
 		}
 	}]);

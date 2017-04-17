@@ -56,109 +56,76 @@ class Thing extends React.Component {
 		*/
 		markup = 
 			<form>
-				<h2>Form Element</h2>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui.</p>
-				<p>
-					<label for="text_field">Text Field:</label><br/>
-					<input type="text" id="text_field" />
-				</p>
-				<p>
-					<label for="text_area">Text Area:</label><br/>
-					<textarea id="text_area"></textarea>
-				</p>
-				<p>
-					<label for="select_element">Select Element:</label><br/>
-					<select name="select_element">
-						<optgroup label="Option Group 1"><option value="1">Option 1</option><option value="2">Option 2</option><option value="3">Option 3</option></optgroup>
-						<optgroup label="Option Group 2"><option value="1">Option 1</option><option value="2">Option 2</option><option value="3">Option 3</option></optgroup>
+				<div className="form-group">
+					<label for="exampleInputEmail1">Email address</label>
+					<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+					<small id="emailHelp" className="form-text text-muted">We&rsquo;ll never share your email with anyone else.</small>
+				</div>
+				<div className="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+				</div>
+				<div className="form-group">
+					<label for="exampleSelect1">Example select</label>
+					<select className="form-control" id="exampleSelect1">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
 					</select>
-				</p>
-
-
-				<h3>Checkboxes and Radio Buttons</h3>
-
-				<div className="checkbox">
-					<label>
-						<input type="checkbox" value="" />
-						Option one is this and that&mdash;be sure to include why it&#8217;s great
+				</div>
+				<div className="form-group">
+					<label for="exampleSelect2">Example multiple select</label>
+					<select multiple className="form-control" id="exampleSelect2">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>
+				<div className="form-group">
+					<label for="exampleTextarea">Example textarea</label>
+					<textarea className="form-control" id="exampleTextarea" rows="3"></textarea>
+				</div>
+				<div className="form-group">
+					<label for="exampleInputFile">File input</label>
+					<input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+					<small id="fileHelp" className="form-text text-muted">This is some placeholder block-level help text for the above input. It&rsquo;s a bit lighter and easily wraps to a new line.</small>
+				</div>
+				<fieldset className="form-group">
+					<legend>Radio buttons</legend>
+					<div className="form-check">
+						<label className="form-check-label">
+							<input type="radio" className="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked />
+							<span>Option one is this and that &mdash; be sure to include why it&rsquo;s great</span>
+						</label>
+					</div>
+					<div className="form-check">
+					<label className="form-check-label">
+							<input type="radio" className="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" />
+							<span>Option two can be something else and selecting it will deselect option one</span>
+						</label>
+					</div>
+					<div className="form-check disabled">
+					<label className="form-check-label">
+							<input type="radio" className="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled />
+							<span>Option three is disabled</span>
+						</label>
+					</div>
+				</fieldset>
+				<div className="form-check">
+					<label className="form-check-label">
+						<input type="checkbox" className="form-check-input" />
+						<span>Check me out</span>
 					</label>
 				</div>
-				<div className="checkbox disabled">
-					<label>
-						<input type="checkbox" value="" disabled />
-						Option two is disabled
-					</label>
+				<div className="form-group">
+					<button type="submit" className="btn btn-primary">Submit</button>
 				</div>
-
-				<h4>Radio Buttons</h4>
-				<div className="radio">
-					<label>
-						<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked />
-						Option one is this and that&mdash;be sure to include why it&#8217;s great
-					</label>
-				</div>
-				<div className="radio">
-					<label>
-						<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
-						Option two can be something else and selecting it will deselect option one
-					</label>
-				</div>
-				<div className="radio disabled">
-					<label>
-						<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled />
-						Option three is disabled
-					</label>
-				</div>
-
-
-
-				<h4>Inline Checkboxes</h4>
-				<label className="checkbox-inline">
-					<input type="checkbox" id="inlineCheckbox1" value="option1" /> 1
-				</label>
-				<label className="checkbox-inline">
-					<input type="checkbox" id="inlineCheckbox2" value="option2" /> 2
-				</label>
-				<label className="checkbox-inline">
-					<input type="checkbox" id="inlineCheckbox3" value="option3" /> 3
-				</label>
-
-				<h4>Inline Radio Buttons</h4>
-				<label className="radio-inline">
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" /> 1
-				</label>
-				<label className="radio-inline">
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" /> 2
-				</label>
-				<label className="radio-inline">
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" /> 3
-				</label>
-
-				<p>
-					<label for="password">Password:</label>
-				</p>
-				<p>
-					<input type="password" className="password" name="password" />
-				</p>
-				<p>
-					<label for="file">File Input:</label><br/>
-					<input type="file" className="file" name="file" />
-				</p>
-				<p>
-					<input className="button" type="reset" value="Clear" /> <input className="button" type="submit" value="Submit" />
-				</p>
 			</form>
-		;
-
-
-
-
-
-
-
-
-
-
+		; 
 		return(
 			markup
 		); 
