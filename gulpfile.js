@@ -116,7 +116,7 @@ you commit.
 */
 
 // Use this if you haven't installed bless yet.
-gulp.task('default', ['sass', 'scripts', 'watch']);
+gulp.task('default', ['sass', 'watch']);
 //gulp.task('layout', ['sass', 'scripts', 'watch']);
 
 
