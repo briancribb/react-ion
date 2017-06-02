@@ -67,7 +67,6 @@ class PlaceButton extends React.Component {
 		this.props.updateTopState({place:this.props.place});
 	}
 	render() {
-		console.log(this.state);
 		return(
 				<button onClick={this._handleClick.bind(this)} type="button" className={"btn btn-" + this.props.type}>{this.props.place}</button>
 			);
