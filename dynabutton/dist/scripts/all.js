@@ -73,7 +73,8 @@ var Thing = function (_React$Component) {
 
 
 		_this.state = {
-			test: false
+			test: false,
+			testString: ''
 		};
 		//this._getData();
 		console.log('this.state');
@@ -137,199 +138,13 @@ var Thing = function (_React$Component) {
 					'div',
 					{ className: 'form-group' },
 					React.createElement(
-						'label',
-						{ 'for': 'exampleInputEmail1' },
-						'Email address'
-					),
-					React.createElement('input', { type: 'email', className: 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: 'Enter email' }),
-					React.createElement(
-						'small',
-						{ id: 'emailHelp', className: 'form-text text-muted' },
-						'We\u2019ll never share your email with anyone else.'
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
-						'label',
-						{ 'for': 'exampleInputPassword1' },
-						'Password'
-					),
-					React.createElement('input', { type: 'password', className: 'form-control', id: 'exampleInputPassword1', placeholder: 'Password' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
-						'label',
-						{ 'for': 'exampleSelect1' },
-						'Example select'
-					),
-					React.createElement(
-						'select',
-						{ className: 'form-control', id: 'exampleSelect1' },
-						React.createElement(
-							'option',
-							null,
-							'1'
-						),
-						React.createElement(
-							'option',
-							null,
-							'2'
-						),
-						React.createElement(
-							'option',
-							null,
-							'3'
-						),
-						React.createElement(
-							'option',
-							null,
-							'4'
-						),
-						React.createElement(
-							'option',
-							null,
-							'5'
-						)
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
-						'label',
-						{ 'for': 'exampleSelect2' },
-						'Example multiple select'
-					),
-					React.createElement(
-						'select',
-						{ multiple: true, className: 'form-control', id: 'exampleSelect2' },
-						React.createElement(
-							'option',
-							null,
-							'1'
-						),
-						React.createElement(
-							'option',
-							null,
-							'2'
-						),
-						React.createElement(
-							'option',
-							null,
-							'3'
-						),
-						React.createElement(
-							'option',
-							null,
-							'4'
-						),
-						React.createElement(
-							'option',
-							null,
-							'5'
-						)
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
-						'label',
-						{ 'for': 'exampleTextarea' },
-						'Example textarea'
-					),
-					React.createElement('textarea', { className: 'form-control', id: 'exampleTextarea', rows: '3' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
-						'label',
-						{ 'for': 'exampleInputFile' },
-						'File input'
-					),
-					React.createElement('input', { type: 'file', className: 'form-control-file', id: 'exampleInputFile', 'aria-describedby': 'fileHelp' }),
-					React.createElement(
-						'small',
-						{ id: 'fileHelp', className: 'form-text text-muted' },
-						'This is some placeholder block-level help text for the above input. It\u2019s a bit lighter and easily wraps to a new line.'
-					)
-				),
-				React.createElement(
-					'fieldset',
-					{ className: 'form-group' },
-					React.createElement(
-						'legend',
-						null,
-						'Radio buttons'
-					),
-					React.createElement(
-						'div',
-						{ className: 'form-check' },
-						React.createElement(
-							'label',
-							{ className: 'form-check-label' },
-							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios1', value: 'option1', checked: true }),
-							React.createElement(
-								'span',
-								null,
-								'Option one is this and that \u2014 be sure to include why it\u2019s great'
-							)
-						)
-					),
-					React.createElement(
-						'div',
-						{ className: 'form-check' },
-						React.createElement(
-							'label',
-							{ className: 'form-check-label' },
-							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios2', value: 'option2' }),
-							React.createElement(
-								'span',
-								null,
-								'Option two can be something else and selecting it will deselect option one'
-							)
-						)
-					),
-					React.createElement(
-						'div',
-						{ className: 'form-check disabled' },
-						React.createElement(
-							'label',
-							{ className: 'form-check-label' },
-							React.createElement('input', { type: 'radio', className: 'form-check-input', name: 'optionsRadios', id: 'optionsRadios3', value: 'option3', disabled: true }),
-							React.createElement(
-								'span',
-								null,
-								'Option three is disabled'
-							)
-						)
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-check' },
-					React.createElement(
-						'label',
-						{ className: 'form-check-label' },
-						React.createElement('input', { type: 'checkbox', className: 'form-check-input' }),
-						React.createElement(
-							'span',
-							null,
-							'Check me out'
-						)
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: 'form-group' },
-					React.createElement(
 						'button',
-						{ type: 'submit', className: 'btn btn-primary' },
+						{ type: 'submit', className: 'btn btn-primary',
+							'data-option1': '{this.state.testString}',
+							'data-option2': this.state.testString,
+							'data-option3': '{this.state.testString}',
+							'data-option4': '{this.state.testString}'
+						},
 						'Submit'
 					)
 				)
@@ -348,11 +163,6 @@ ReactDOM.render(React.createElement(Thing, null), document.getElementById('test-
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
-				$topBar				: $('#topbar'),
-				$mainNav			: $('#mainnav'),
-				$mainNavToggle		: $('.mainnav-toggle a'),
-				$mainFooter			: $('#main-footer'),
-				$mainFooterContent	: $('#main-footer-content'),
 				size				: '',
 				breakpoints			: {
 					xs: 0,
@@ -381,33 +191,14 @@ ReactDOM.render(React.createElement(Thing, null), document.getElementById('test-
 				})()
 			};
 
-
 			APP.addResizeTask({
 				func: function() {
-
-					var topBarHeight = APP.props.$topBar.outerHeight(true),
-						footerHeight = APP.props.$mainFooterContent.outerHeight(true);
-
-					APP.props.$mainFooter.height( footerHeight );
-
-					// Correct footer height upon resize and correct top body padding for navbar height
-					APP.props.$topBar.css({
-						'position'			: 'fixed',
-						'top'				: '0'
-					});
-					//APP.props.$mainNav.css({
-					//	'top'		: topBarHeight
-					//});
-					APP.props.$bodyElement.css({
-						//'padding-top'		:topBarHeight+1,
-						'padding-bottom'	:footerHeight//,
-					});
 					APP.props.size = APP.getSiteViewType();
 				},
 				args:[] // No arguments, so it's an empty array.
 			});
 
-			APP.addListeners();
+			//APP.addListeners();
 			APP.manageResize();
 
 			// Setup throttling for resize tasks. Run the manageResize function once upon init. This part relies upon having 
@@ -418,17 +209,6 @@ ReactDOM.render(React.createElement(Thing, null), document.getElementById('test-
 			$(window).resize(throttled);
 		},
 		addListeners : function() {
-
-			// When the toggle is clicked, a CSS3 transition class is added to the main navigation. Then the "open" class
-			// is toggled to open/close the nav. This class only matters at smaller window sizes, since the nav is always 
-			// visible at larger sizes.
-			APP.props.$mainNavToggle.on(
-				'click',
-				function(ev){
-					console.log(ev);
-					APP.props.$mainNav.addClass('trans-right').toggleClass('open');
-				}
-			);
 
 			// Once the main navigation has finished opening or closing, the CSS3 transition class is removed. This 
 			// prevents the transition from happening on a resize, because that looks weird when other things are just 
