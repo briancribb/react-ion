@@ -71,12 +71,19 @@ class DynaButton extends React.Component {
 			dinglehopper:0
 		}
 
-		//let that = this;
-		//window.getState = function() {
-		//	return that.state;
-		//}
 	}
+	componentDidMount() {
+		this._getData();
+	}
+	_getData() {
+		console.log('_getData()');
 
+		var obj = {
+			initialized:true
+		}
+		this.setState(obj);
+
+	}
 	_updateTopState(obj) {
 		this.setState(obj);
 	}
@@ -123,64 +130,66 @@ class DynaButton extends React.Component {
 
 	render() {
 		let markup = null;
-		markup = 
-			/*
-			<form>
-				<ButtonGroup type="primary" updateTopState={this._updateTopState.bind(this)} />
-				<div className="form-group">
-					<button type="submit" className="btn btn-primary"
-						data-place={this.state.place} 
-					>{this.state.place}</button>
+		if (this.state.initialized) {
+			markup = 
+				/*
+				<form>
+					<ButtonGroup type="primary" updateTopState={this._updateTopState.bind(this)} />
+					<div className="form-group">
+						<button type="submit" className="btn btn-primary"
+							data-place={this.state.place} 
+						>{this.state.place}</button>
+					</div>
+				</form>
+				*/
+				<div id="steps">
+					<h4>Navigate through the things:</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
+
+
+
+
+
+					<ButtonGroup array="things" arrayIndex="thing" current={this.state.data.things[this.state.thing]} prevNext={this._prevNext.bind(this)} />
+
+
+
+
+
+					<h4>Search through the stuff:</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
+					<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
+					</div>
+					<p className="mb-4"><strong>Item 1</strong>: This is serious stuff</p>
+
+					<h4>Find the Doodad:</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
+					<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
+					</div>
+					<p className="mb-4"><strong>Doodad 1</strong>: basically a thingamajig</p>
+					
+					<h4>Look through the Dinglehoppers</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
+					<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
+						<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
+					</div>
+					<p className="mb-4"><strong>Dinglehopper 1</strong>: Nothing like a snarfblat at all.</p>
+
+
+
+					<h4>The Final Button</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
+					<div className="btn-group btn-group-lg mb-4 center-block" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-primary">Submit</button>
+					</div>
 				</div>
-			</form>
-			*/
-			<div id="steps">
-				<h4>Navigate through the things:</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-
-
-
-
-
-				<ButtonGroup array="things" arrayIndex="thing" current={this.state.data.things[this.state.thing]} prevNext={this._prevNext.bind(this)} />
-
-
-
-
-
-				<h4>Search through the stuff:</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
-				</div>
-				<p className="mb-4"><strong>Item 1</strong>: This is serious stuff</p>
-
-				<h4>Find the Doodad:</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
-				</div>
-				<p className="mb-4"><strong>Doodad 1</strong>: basically a thingamajig</p>
-				
-				<h4>Look through the Dinglehoppers</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
-					<button type="button" className="btn btn-secondary"><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
-				</div>
-				<p className="mb-4"><strong>Dinglehopper 1</strong>: Nothing like a snarfblat at all.</p>
-
-
-
-				<h4>The Final Button</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<div className="btn-group btn-group-lg mb-4 center-block" role="group" aria-label="Basic example">
-					<button type="button" className="btn btn-primary">Submit</button>
-				</div>
-			</div>
-		;
+			;
+		}
 		return(
 			markup
 		); 
