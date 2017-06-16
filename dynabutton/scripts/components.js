@@ -96,12 +96,12 @@ class DynaButton extends React.Component {
 		this.setState(obj);
 	}
 	_prevNext(strArrayName, arrayIndex, direction) {
-		console.log('_prevNext()');
+		//console.log('_prevNext()');
 
 		var limit = this.state.data[strArrayName].length - 1,
 			index;
 
-		console.log([this.state[arrayIndex], limit]);
+		//console.log([this.state[arrayIndex], limit]);
 
 		if (direction === 'next') {
 			index = (this.state[arrayIndex] >= limit) ? 0 : (this.state[arrayIndex]) + 1 ;
