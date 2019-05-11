@@ -1,4 +1,4 @@
 # react-ion
 ## Various experiments with ReactJS
 
-I want to play around with React, but I don't want a bunch of different folders which all contain the source files. I'd rather run Gulp in one place and just direct it to subfolders.
+Playing around with React in the browser. No Gulp, no Webpack, just HTML and JavaScript. These are small demos, so I'm not even going to parse any Sass.
