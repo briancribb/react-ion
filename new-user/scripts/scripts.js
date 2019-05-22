@@ -5,48 +5,47 @@ let NU = {
 		constructor() {
 			super();
 			this.state = {
-				stuff:true,
-				things:true
+				states:[]
 			}
 		}
+
+		getSomeJSON(path, property) {
+			let that = this;
+			fetch(path)
+				.then(response => response.json()) // Returns a promise, so gotta have another then.
+				.then( json => {
+					that.setState({[property]:json});
+				})
+				.catch( error => {
+					console.log('error', error);
+				});
+		}
+
+		componentDidMount() {
+			this.getSomeJSON('../data/states.json', 'states');
+			this.getSomeJSON('../data/subscriptions.json', 'subscriptions');
+		}
+
+
 		render() {
 			return(
-				<form id="my-form" className="blah">
+				<div className="container">
+				<form id="my-form" className="p-3">
 					<h3>New User</h3>
 					<div className="form-row">
 						<div className="col-md-6">
-							<NU.input type="text" labelText="Name" placeholderText="John Smith" />
-							<NU.input type="text" labelText="Address" placeholderText="123 Nota Street" />
-							<NU.input type="text" labelText="City" placeholderText="Nowherville" />
-							<div className="form-group">
-								<label className="sr-only">State</label>
-								<select className="form-control form-control-lg">
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-									<option>RI</option>
-								</select>
-							</div>
-							<NU.input type="number" labelText="ZIP Code" placeholderText="55555" />
+							<NU.input type="text" labelText="Name" fieldName="name" placeholderText="John Smith" />
+							<NU.input type="text" labelText="Address" fieldName="address" placeholderText="123 Nota Street" />
+							<NU.input type="text" labelText="City" fieldName="city" placeholderText="Nowherville" />
+							<NU.select data={this.state.states} labelText="States" />
+							<NU.input type="number" labelText="ZIP Code" fieldName="zip" placeholderText="55555" />
 						</div>
 						<div className="col-md-6">
-							<NU.input type="number" labelText="Email" placeholderText="no@junkmail.com" />
-							<NU.input type="tel" labelText="Phone" placeholderText="555-555-5555" />
-							<div className="form-group">
-								<label className="sr-only">Username</label>
-								<div className="input-group">
-									<div className="input-group-prepend">
-										<div className="input-group-text">@</div>
-									</div>
-									<input type="text" className="form-control form-control-lg" name="username" placeholder="username" />
-								</div>
-							</div>
-							<NU.input type="password" labelText="Password" placeholderText="New Password" />
-							<NU.input type="password" labelText="Confirm Password" placeholderText="Confirm password" />
+							<NU.input type="number" labelText="Email" fieldName="email" placeholderText="no@junkmail.com" />
+							<NU.input type="tel" labelText="Phone" fieldName="phone" placeholderText="555-555-5555" />
+							<NU.input type="username" labelText="Username" fieldName="username" placeholderText="Username" />
+							<NU.input type="password" labelText="Password" fieldName="password" placeholderText="New Password" />
+							<NU.input type="password" labelText="Confirm Password" fieldName="password-confirm" placeholderText="Confirm password" />
 						</div>
 					</div>
 					<div className="form-row">
@@ -200,6 +199,7 @@ let NU = {
 						</div>
 					</div>
 				</form>
+				</div>
 			);
 		}
 	},
@@ -214,28 +214,36 @@ let NU = {
 		render() {
 			let markup = (this.props.type === "username")
 			?
-			<div className="form-group">
-				<label className="sr-only">Username</label>
-				<div className="input-group">
-					<div className="input-group-prepend">
-						<div className="input-group-text">@</div>
-					</div>
-					<input type={this.props.type} className="form-control form-control-lg" name="name" placeholder={this.props.placeholderText} />
+			<div className="input-group">
+				<div className="input-group-prepend">
+					<div className="input-group-text">@</div>
 				</div>
+			<input type="text" className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.placeholderText} />;
 			</div>
 			:
-			<div className="form-group">
-				<label className="sr-only">{this.props.labelText}</label>
-				<input type={this.props.type} className="form-control form-control-lg" name="name" placeholder={this.props.placeholderText} />
-			</div>
+			<input type={this.props.type} className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.placeholderText} />;
 			;
-			return (markup);
+
+			return(
+				<div className="form-group">
+					<label className="sr-only">{this.props.labelText}</label>
+					{markup}
+				</div>
+			)
 		}
 	},
 	select : class extends React.Component {
 		render() {
+			let listItems = this.props.data.map((item) =>
+				<option key={item.id} value={item.id}>{item.label}</option>
+			);
 			return(
-				<button className="my-button">My Button</button>
+				<div className="form-group">
+					<label className="sr-only">State</label>
+					<select className="form-control form-control-lg">
+						{listItems}
+					</select>
+				</div>
 			);
 		}
 	},
@@ -252,7 +260,7 @@ let NU = {
 				<button className="my-button">My Button</button>
 			);
 		}
-	}	
+	},
 }
 
 

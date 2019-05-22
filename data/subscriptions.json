@@ -1,0 +1,82 @@
+[
+    {
+        "label": "Marketing Today",
+        "id": "Sub1"
+    },
+    {
+        "label": "Pop-up Quarterly",
+        "id": "Sub2"
+    },
+    {
+        "label": "House Flipper Digest",
+        "id": "Sub3"
+    },
+    {
+        "label": "Teen Ferret Lovers",
+        "id": "Sub4"
+    },
+    {
+        "label": "Pseudo-Science Journal",
+        "id": "Sub5"
+    },
+    {
+        "label": "Trains and Tracks",
+        "id": "Sub6"
+    },
+    {
+        "label": "Political Avoidance",
+        "id": "Sub7"
+    },
+    {
+        "label": "Not About Dogs",
+        "id": "Sub8"
+    },
+    {
+        "label": "Shoelace Stories",
+        "id": "Sub9"
+    },
+    {
+        "label": "SEO Magazine",
+        "id": "Sub10"
+    },
+    {
+        "label": "Monthly Memes",
+        "id": "Sub11"
+    },
+    {
+        "label": "Trash Talk",
+        "id": "Sub12"
+    },
+    {
+        "label": "Scream Screens",
+        "id": "Sub13"
+    },
+    {
+        "label": "Wildlife Scat Digest",
+        "id": "Sub14"
+    },
+    {
+        "label": "Digital Thoughts",
+        "id": "Sub15"
+    },
+    {
+        "label": "Star Truck Magazine",
+        "id": "Sub16"
+    },
+    {
+        "label": "Strategic Bingo",
+        "id": "Sub17"
+    },
+    {
+        "label": "Household Beer",
+        "id": "Sub18"
+    },
+    {
+        "label": "Bathtub Drain Catalog",
+        "id": "Sub19"
+    },
+    {
+        "label": "Flat Earth",
+        "id": "Sub20"
+    }
+]
