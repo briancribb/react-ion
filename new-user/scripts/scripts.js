@@ -5,16 +5,118 @@ let NU = {
 		constructor() {
 			super();
 			this.state = {
-				states:[]
+				states:[],
+				subscriptions:[],
+				fields: {
+					name:{
+						value:'',
+						labelText:'Name',
+						placeholder:'John Smith'
+					},
+					address:{
+						value:'',
+						labelText:'Address',
+						placeholder:'123 Nota Street'
+					},
+					city:{
+						value:'',
+						labelText:'City',
+						placeholder:'Nowhereville'
+					},
+					state:{
+						value:'SC',
+						labelText:'State',
+						placeholder:'Select a State'
+					},
+					zip:{
+						value:'',
+						labelText:'ZIP Code',
+						placeholder:'555555'
+					},
+					email:{
+						value:'',
+						labelText:'Email',
+						placeholder:'no@junkmail.com'
+					},
+					phone:{
+						value:'',
+						labelText:'Phone',
+						placeholder:'555-555-5555'
+					},
+					username:{
+						value:'',
+						labelText:'Username',
+						placeholder:'username'
+					},
+					password:{
+						value:'',
+						labelText:'Password',
+						placeholder:'Password'
+					},
+					passwordConfirm:{
+						value:'',
+						labelText:'Confirm Password',
+						placeholder:'Confirm Password'
+					},
+					personalDataSetting:{
+						options:[
+							{
+								label:'All!',
+								id:'2'
+							},
+							{
+								label:'Some',
+								id:'1'
+							},
+							{
+								label:'None',
+								id:'0'
+							}
+						],
+						value:'2'
+					},
+					contactPhone:{
+						value:true,
+						placeholder:'Phone'
+					},
+					contactEmail:{
+						value:true,
+						placeholder:'Email'
+					},
+					contactVisit:{
+						value:true,
+						placeholder:'In-person visit'
+					}
+				}
 			}
+			this.handleChange = this.handleChange.bind(this);
 		}
 
-		getSomeJSON(path, property) {
+		handleChange(evt) {
+			console.log(evt.target.name, '-', evt.target.type);
+
+			let fieldsClone = {...this.state.fields};
+
+			switch(evt.target.type) {
+				case "checkbox":
+					fieldsClone[evt.target.name].value = evt.target.checked;
+					break;
+				default:
+					fieldsClone[evt.target.name].value = evt.target.value;
+			}
+
+			this.setState({
+				fields:fieldsClone
+			});
+		}
+
+		getSomeJSON(path, callback) {
 			let that = this;
 			fetch(path)
 				.then(response => response.json()) // Returns a promise, so gotta have another then.
 				.then( json => {
-					that.setState({[property]:json});
+					//that.setState({[property]:json});
+					callback(json);
 				})
 				.catch( error => {
 					console.log('error', error);
@@ -22,30 +124,58 @@ let NU = {
 		}
 
 		componentDidMount() {
-			this.getSomeJSON('../data/states.json', 'states');
-			this.getSomeJSON('../data/subscriptions.json', 'subscriptions');
+			let that = this;
+			this.getSomeJSON('../data/states.json', (data) =>{
+				that.setState({states:data});
+			});
+			this.getSomeJSON('../data/subscriptions.json', (data) =>{
+				let fieldsWithSubs = Object.assign({}, this.state.fields);
+				data.forEach((sub) => {
+					fieldsWithSubs[sub.id] = {
+						value: true
+					}
+				});
+
+				that.setState({
+					subscriptions:data,
+					fields:fieldsWithSubs
+				});
+
+				console.log('state', that.state);
+			});
 		}
 
+		getSubscriptionCheckboxes() {
+			let that = this;
+			return this.state.subscriptions.map((sub) => {
+				return (
+					<div className="col-12 col-sm-6 col-md-4 mb-2" key={sub.id}>
+						<NU.checkbox labelText={sub.label} extraClass=" subscription" fieldName={sub.id} checked={that.state.fields[sub.id]} handleChange={that.handleChange} />
+					</div>
+				)
+			});
+		}
 
 		render() {
+			let checkboxes = this.getSubscriptionCheckboxes();
 			return(
 				<div className="container">
 				<form id="my-form" className="p-3">
 					<h3>New User</h3>
 					<div className="form-row">
 						<div className="col-md-6">
-							<NU.input type="text" labelText="Name" fieldName="name" placeholderText="John Smith" />
-							<NU.input type="text" labelText="Address" fieldName="address" placeholderText="123 Nota Street" />
-							<NU.input type="text" labelText="City" fieldName="city" placeholderText="Nowherville" />
-							<NU.select data={this.state.states} labelText="States" />
-							<NU.input type="number" labelText="ZIP Code" fieldName="zip" placeholderText="55555" />
+							<NU.input type="text" fieldName="name" field={this.state.fields.name} handleChange={this.handleChange} />
+							<NU.input type="text" fieldName="address" field={this.state.fields.address} handleChange={this.handleChange} />
+							<NU.input type="text" fieldName="city" field={this.state.fields.city} handleChange={this.handleChange} />
+							<NU.select options={this.state.states} fieldName='state' field={this.state.fields.state} handleChange={this.handleChange} />
+							<NU.input type="number" fieldName="zip" field={this.state.fields.zip} handleChange={this.handleChange} />
 						</div>
 						<div className="col-md-6">
-							<NU.input type="number" labelText="Email" fieldName="email" placeholderText="no@junkmail.com" />
-							<NU.input type="tel" labelText="Phone" fieldName="phone" placeholderText="555-555-5555" />
-							<NU.input type="username" labelText="Username" fieldName="username" placeholderText="Username" />
-							<NU.input type="password" labelText="Password" fieldName="password" placeholderText="New Password" />
-							<NU.input type="password" labelText="Confirm Password" fieldName="password-confirm" placeholderText="Confirm password" />
+							<NU.input type="number" fieldName="email" field={this.state.fields.email} handleChange={this.handleChange} />
+							<NU.input type="tel" fieldName="phone" field={this.state.fields.phone} handleChange={this.handleChange} />
+							<NU.input type="username" fieldName="username" field={this.state.fields.username} handleChange={this.handleChange} />
+							<NU.input type="password" fieldName="password" field={this.state.fields.password} handleChange={this.handleChange} />
+							<NU.input type="password" fieldName="passwordConfirm" field={this.state.fields.passwordConfirm} handleChange={this.handleChange} />
 						</div>
 					</div>
 					<div className="form-row">
@@ -83,120 +213,19 @@ let NU = {
 						<div className="col-md-6">
 							<div className=" form-text mb-3">How may we contact you?</div>
 							<div className="form-group">
-								<div className="custom-control custom-checkbox custom-control-inline">
-									<input type="checkbox" className="form-check-input" name="contact-type" value="phone" defaultChecked />
-									<label>Phone</label>
-								</div>
-								<div className="custom-control custom-checkbox custom-control-inline">
-									<input type="checkbox" className="form-check-input" name="contact-type" value="email" />
-									<label>Email</label>
-								</div>
-								<div className="custom-control custom-checkbox custom-control-inline">
-									<input type="checkbox" className="form-check-input" name="contact-type" value="visit" />
-									<label>In-person visit</label>
-								</div>
+								<NU.checkbox labelText={this.state.fields.contactPhone.placeholder} fieldName="contactPhone" checked={this.state.fields.contactPhone.value} inline={true} handleChange={this.handleChange} />
+								<NU.checkbox labelText={this.state.fields.contactEmail.placeholder} fieldName="contactEmail" checked={this.state.fields.contactEmail.value} inline={true} handleChange={this.handleChange} />
+								<NU.checkbox labelText={this.state.fields.contactVisit.placeholder} fieldName="contactVisit" checked={this.state.fields.contactVisit.value} inline={true} handleChange={this.handleChange} />
 							</div>
 						</div>
 					</div>
 					<div className="form-row">
 						<div className="col mb-3">
-							<strong>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Select All</label>
-							</div>
-							</strong>
+							<button type="button" className="btn btn-primary">Select All</button>
 						</div>
 					</div>
-					<div className="row flex-row justify-content-center">
-						<div className="col-sm-6 col-md-3 mb-3">
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-						</div>
-						<div className="col-sm-6 col-md-3 mb-3">
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-						</div>
-						<div className="col-sm-6 col-md-3">
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-						</div>
-						<div className="col-sm-6 col-md-3">
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-							<div className="custom-control custom-checkbox">
-								<input type="checkbox" name="test1" className="custom-control-input mb-1" />
-								<label className="custom-control-label" htmlFor="test1">Check this box</label>
-							</div>
-						</div>
+					<div className="form-row">
+						{checkboxes}
 					</div>
 				</form>
 				</div>
@@ -218,49 +247,56 @@ let NU = {
 				<div className="input-group-prepend">
 					<div className="input-group-text">@</div>
 				</div>
-			<input type="text" className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.placeholderText} />;
+			<input type="text" className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			</div>
 			:
-			<input type={this.props.type} className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.placeholderText} />;
+			<input type={this.props.type} className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			;
 
 			return(
 				<div className="form-group">
-					<label className="sr-only">{this.props.labelText}</label>
+					<label className="sr-only">{this.props.field.labelText}</label>
 					{markup}
 				</div>
 			)
 		}
 	},
+	radioOption : class extends React.Component {
+		render() {
+		}
+	},
+	radioGroup : class extends React.Component {
+		render() {
+		}
+	},
 	select : class extends React.Component {
 		render() {
-			let listItems = this.props.data.map((item) =>
+			let listItems = this.props.options.map((item) =>
 				<option key={item.id} value={item.id}>{item.label}</option>
 			);
 			return(
 				<div className="form-group">
-					<label className="sr-only">State</label>
-					<select className="form-control form-control-lg">
+					<label  htmlFor={this.props.fieldName} className="sr-only">{this.props.field.labelText}</label>
+					<select className="form-control form-control-lg" id={this.props.fieldName} name={this.props.fieldName} value={this.props.field.value} onChange={this.props.handleChange}>
+						<option value="">{this.props.field.placeholder}</option>
 						{listItems}
 					</select>
 				</div>
 			);
 		}
 	},
-	radio : class extends React.Component {
-		render() {
-			return(
-				<button className="my-button">My Button</button>
-			);
-		}
-	},
 	checkbox : class extends React.Component {
 		render() {
+			let containerClasses = "custom-control custom-checkbox";
+			containerClasses = this.props.inline ? containerClasses + '  custom-control-inline' : containerClasses;
 			return(
-				<button className="my-button">My Button</button>
+				<div className={containerClasses}>
+					<input onChange={this.props.handleChange} type="checkbox" className={"custom-control-input mb-1"+this.props.extraClass} id={this.props.fieldName} name={this.props.fieldName} checked={this.props.checked} />
+					<label className="custom-control-label" htmlFor={this.props.fieldName}>{this.props.labelText}</label>
+				</div>
 			);
 		}
-	},
+	}
 }
 
 
