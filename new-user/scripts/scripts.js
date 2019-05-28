@@ -33,7 +33,7 @@ let NU = {
 						errorMessage:"We can't send our mailers just anywhere."
 					},
 					state:{
-						value:'SC',
+						value:'',
 						labelText:'State',
 						placeholder:'Select a State',
 						required:true,
@@ -298,16 +298,17 @@ let NU = {
 				<div className="input-group-prepend">
 					<div className="input-group-text">@</div>
 				</div>
-			<input type="text" className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
+			<input type="text" className="form-control form-control-lg is-invalid" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			</div>
 			:
-			<input type={this.props.type} className="form-control form-control-lg" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
+			<input type={this.props.type} className="form-control form-control-lg is-invalid" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			;
 
 			return(
 				<div className="form-group">
 					<label className="sr-only">{this.props.field.labelText}</label>
 					{markup}
+					<small className="text-danger">{this.props.field.errorMessage}</small>
 				</div>
 			)
 		}
@@ -341,10 +342,11 @@ let NU = {
 			return(
 				<div className="form-group">
 					<label  htmlFor={this.props.fieldName} className="sr-only">{this.props.field.labelText}</label>
-					<select className="form-control form-control-lg" id={this.props.fieldName} name={this.props.fieldName} value={this.props.field.value} onChange={this.props.handleChange}>
+					<select className="form-control form-control-lg is-invalid" id={this.props.fieldName} name={this.props.fieldName} value={this.props.field.value} onChange={this.props.handleChange}>
 						<option value="">{this.props.field.placeholder}</option>
 						{listItems}
 					</select>
+					<small className="text-danger">{this.props.field.errorMessage}</small>
 				</div>
 			);
 		}
