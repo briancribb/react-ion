@@ -11,66 +11,96 @@ let NU = {
 					name:{
 						value:'',
 						labelText:'Name',
-						placeholder:'John Smith'
+						placeholder:'John Smith',
+						required:true,
+						validated: null,
+						errorMessage:"We need a name, please."
 					},
 					address:{
 						value:'',
 						labelText:'Address',
-						placeholder:'123 Nota Street'
+						placeholder:'123 Nota Street',
+						required:true,
+						validated: null,
+						errorMessage:"We need your full address so we can spam you old-school."
 					},
 					city:{
 						value:'',
 						labelText:'City',
-						placeholder:'Nowhereville'
+						placeholder:'Nowhereville',
+						required:true,
+						validated: null,
+						errorMessage:"We can't send our mailers just anywhere."
 					},
 					state:{
 						value:'SC',
 						labelText:'State',
-						placeholder:'Select a State'
+						placeholder:'Select a State',
+						required:true,
+						validated: null,
+						errorMessage:"We need to know what state you're in."
 					},
 					zip:{
 						value:'',
 						labelText:'ZIP Code',
-						placeholder:'555555'
+						placeholder:'555555',
+						required:true,
+						validated: null,
+						errorMessage:"This field is really important for our junk mail department."
 					},
 					email:{
 						value:'',
 						labelText:'Email',
-						placeholder:'no@junkmail.com'
+						placeholder:'no@junkmail.com',
+						required:true,
+						validated: null,
+						errorMessage:"We can't spam you without a proper email address."
 					},
 					phone:{
 						value:'',
 						labelText:'Phone',
-						placeholder:'555-555-5555'
+						placeholder:'555-555-5555',
+						required:true,
+						validated: null,
+						errorMessage:"Please give us your phone number so we can text you every day."
 					},
 					username:{
 						value:'',
 						labelText:'Username',
-						placeholder:'username'
+						placeholder:'username',
+						required:true,
+						validated: null,
+						errorMessage:"Come on, you know you need to fill this one out."
 					},
 					password:{
 						value:'',
 						labelText:'Password',
-						placeholder:'Password'
+						placeholder:'Password',
+						required:true,
+						validated: null,
+						errorMessage:"Your password can be anything except blank because we're not messing with regex right now."
 					},
 					passwordConfirm:{
 						value:'',
 						labelText:'Confirm Password',
-						placeholder:'Confirm Password'
+						placeholder:'Confirm Password',
+						required:true,
+						validated: null,
+						errorMessage:"This field is required and needs to match your password."
 					},
 					personalDataSetting:{
 						options:[
 							{
-								label:'All!',
-								id:'2'
+								label:'Nah',
+								id:'0'
 							},
 							{
 								label:'Some',
 								id:'1'
 							},
 							{
-								label:'None',
-								id:'0'
+								label:'All!',
+								id:'2'
 							}
 						],
 						value:'2'
@@ -90,15 +120,18 @@ let NU = {
 				}
 			}
 			this.handleChange = this.handleChange.bind(this);
+			this.selectAllBoxes = this.selectAllBoxes.bind(this);
+			this.handleSubmit = this.handleSubmit.bind(this);
 		}
 
 		handleChange(evt) {
-			console.log(evt.target.name, '-', evt.target.type);
+			//console.log(evt.target.name, '-', evt.target.value);
 
 			let fieldsClone = {...this.state.fields};
 
 			switch(evt.target.type) {
 				case "checkbox":
+					console.log(evt.target.name, '-', evt.target.checked);
 					fieldsClone[evt.target.name].value = evt.target.checked;
 					break;
 				default:
@@ -144,23 +177,61 @@ let NU = {
 				console.log('state', that.state);
 			});
 		}
-
 		getSubscriptionCheckboxes() {
 			let that = this;
 			return this.state.subscriptions.map((sub) => {
 				return (
 					<div className="col-12 col-sm-6 col-md-4 mb-2" key={sub.id}>
-						<NU.checkbox labelText={sub.label} extraClass=" subscription" fieldName={sub.id} checked={that.state.fields[sub.id]} handleChange={that.handleChange} />
+						<NU.checkbox labelText={sub.label} extraClass=" subscription" fieldName={sub.id} checked={that.state.fields[sub.id].value} handleChange={that.handleChange} />
 					</div>
 				)
 			});
 		}
+		selectAllBoxes() {
+			let fieldsClone = {...this.state.fields};
+
+			fieldsClone.contactEmail.value = true;
+			fieldsClone.contactPhone.value = true;
+			fieldsClone.contactVisit.value = true;
+
+			// Watch out, this line works but it's long as hell.
+			fieldsClone.personalDataSetting.value = fieldsClone.personalDataSetting.options[fieldsClone.personalDataSetting.options.length-1].id;
+
+			this.state.subscriptions.forEach( (sub) => {
+				//console.log('sub', sub.id, fieldsClone[sub.id]);
+				fieldsClone[sub.id].value = true;
+			});
+
+			console.log('fieldsClone', fieldsClone);
+
+			this.setState({
+				fields:fieldsClone
+			});
+		}
+		handleSubmit(evt) {
+			alert(evt.type);
+			evt.preventDefault;
+			if (this.validate()) this.submitForm();
+		}
+		validate() {
+			return true;
+		}
+		submitForm() {
+			let fieldsClone = {...this.state.fields};
+			let arrFields = Object.keys(fieldsClone).map( (key) =>{
+				let strValue = !fieldsClone[key].value ? null : fieldsClone[key].value;
+				return key+'='+strValue;
+
+			});
+			console.log( 'my/api/post.php?'+ arrFields.join('&') );
+		}
+
 
 		render() {
 			let checkboxes = this.getSubscriptionCheckboxes();
 			return(
 				<div className="container">
-				<form id="my-form" className="p-3">
+				<form id="my-form" className="p-3" noValidate >
 					<h3>New User</h3>
 					<div className="form-row">
 						<div className="col-md-6">
@@ -179,7 +250,7 @@ let NU = {
 						</div>
 					</div>
 					<div className="form-row">
-						<button type="button" className="btn btn-primary btn-lg btn-block">Submit</button>
+						<button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handleSubmit}>Submit</button>
 					</div>
 					<div className="form-row mt-4">
 						<h4>Other Stuff</h4>
@@ -195,20 +266,7 @@ let NU = {
 					<div className="form-row">
 						<div className="col-md-6">
 							<div className=" form-text mb-3">How much of your personal data can we use?</div>
-							<div className="form-group">
-								<div className="custom-control custom-radio custom-control-inline">
-									<input type="radio" className="form-check-input" name="privacy-level" value="2" defaultChecked />
-									<label><strong>All!</strong></label>
-								</div>
-								<div className="custom-control custom-radio custom-control-inline">
-									<input type="radio" className="form-check-input" name="privacy-level" value="1" />
-									<label><em>Some</em></label>
-								</div>
-								<div className="custom-control custom-radio custom-control-inline">
-									<input type="radio" className="form-check-input" name="privacy-level" value="0" />
-									<label>Nah</label>
-								</div>
-							</div>
+							<NU.radioGroup fieldName="personalDataSetting" field={this.state.fields.personalDataSetting} inline={true} handleChange={this.handleChange} />
 						</div>
 						<div className="col-md-6">
 							<div className=" form-text mb-3">How may we contact you?</div>
@@ -221,7 +279,7 @@ let NU = {
 					</div>
 					<div className="form-row">
 						<div className="col mb-3">
-							<button type="button" className="btn btn-primary">Select All</button>
+							<button type="button" className="btn btn-primary" onClick={this.selectAllBoxes}>Select All</button>
 						</div>
 					</div>
 					<div className="form-row">
@@ -229,13 +287,6 @@ let NU = {
 					</div>
 				</form>
 				</div>
-			);
-		}
-	},
-	button : class extends React.Component {
-		render() {
-			return(
-				<button className="my-button">My Button</button>
 			);
 		}
 	},
@@ -261,12 +312,25 @@ let NU = {
 			)
 		}
 	},
-	radioOption : class extends React.Component {
-		render() {
-		}
-	},
 	radioGroup : class extends React.Component {
 		render() {
+			let containerClasses = "custom-control custom-radio";
+			containerClasses = this.props.inline ? containerClasses + '  custom-control-inline' : containerClasses;
+
+			let radioOptions = this.props.field.options.map((option) => {
+				return(
+					<div key={option.id} className={containerClasses}>
+						<input type="radio" className="form-check-input" name={this.props.fieldName} value={option.id} checked={this.props.field.value === option.id} onChange={this.props.handleChange} />
+						<label>{option.label}</label>
+					</div>
+				);
+			}).reverse();
+
+			return(
+				<div className="form-group">
+					{radioOptions}
+				</div>
+			);
 		}
 	},
 	select : class extends React.Component {
