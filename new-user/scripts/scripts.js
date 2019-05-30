@@ -261,7 +261,24 @@ let NU = {
 		render() {
 			let markup = null;
 			if(this.state.submitted) {
-				markup = <p>Form was submitted.</p>
+				markup = 
+					<div className="container p-3">
+						<div className="row justify-content-center">
+							<div className="col-12 col-md-8 col-lg-6">
+								<h3>Form Submitted!</h3>
+								<p>Thank you for sharing your personal information while creating your account! We will never share your personal information with <strong>anyone</strong><sup>*</sup> and our super-secure servers are entirely hacker-proof!<sup>**</sup> Now that you have an account with our company, you can enjoy all of the services we provide<sup>***</sup> free of charge while surfing the web!</p>
+								<p>You are now enrolled in an exciting array of magazines and newsletters which will enhance your executive experience through synergy!<sup>****</sup> We're glad to have you with us, but if you ever change your mind you can just contact Customer Service to change your notification settings!</p>
+								<ul className="list-unstyled">
+									<li><small className="text-muted">* Your personal data will never be given to any third party for free. However, we reserve the right to sell that information to third parties.</small></li>
+									<li><small className="text-muted">** Although we do have cyber-security measures in place, we take no responsibility for any actions which may be performed by individuals outside of our company.</small></li>
+									<li><small className="text-muted">*** We do not provide any products or services.</small></li>
+									<li><small className="text-muted">**** You will not receive any contact from sources which appeared on the registration form and were deselected. Contact may continue from additional sources which may or may not be listed.</small></li>
+									<li><small className="text-muted">***** We do not contact you in any way, so we have no need for a Customer Service Department. However, many of our vendors do have Customer Service departments and you may contact them individually to discuss your notification settings with that third-party vendor.</small></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				;
 			} else {
 				let checkboxes = this.getSubscriptionCheckboxes();
 				markup =
