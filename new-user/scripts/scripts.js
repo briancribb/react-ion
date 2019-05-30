@@ -5,6 +5,7 @@ let NU = {
 		constructor() {
 			super();
 			this.state = {
+				submitted: false,
 				states:[],
 				subscriptions:[],
 				fields: {
@@ -187,6 +188,7 @@ let NU = {
 				)
 			});
 		}
+
 		selectAllBoxes() {
 			let fieldsClone = {...this.state.fields};
 
@@ -208,14 +210,42 @@ let NU = {
 				fields:fieldsClone
 			});
 		}
+
 		handleSubmit(evt) {
-			alert(evt.type);
 			evt.preventDefault;
 			if (this.validate()) this.submitForm();
 		}
+
 		validate() {
-			return true;
+			let formValid = true;
+			let objFields = {...this.state.fields};
+			Object.keys(objFields).forEach( (key) =>{
+				let field = objFields[key];
+
+				// Skip fields that aren't required.
+				if (!field.required) return;
+
+				// Only required fields will get this far.
+				if (!field.value) {
+					field.validated = false;
+					formValid = false;
+				} else {
+					field.validated = true;
+				}
+			});
+
+			// Passwords are entered but don't match.
+			if (objFields.password.value && objFields.passwordConfirm.value && objFields.password.value !== objFields.passwordConfirm.value) {
+				objFields.passwordConfirm.validated = false;
+				formValid = false;
+			}
+
+			this.setState({
+				fields:objFields
+			});
+			return formValid;
 		}
+
 		submitForm() {
 			let fieldsClone = {...this.state.fields};
 			let arrFields = Object.keys(fieldsClone).map( (key) =>{
@@ -223,92 +253,111 @@ let NU = {
 				return key+'='+strValue;
 
 			});
+			this.setState({submitted:true});
 			console.log( 'my/api/post.php?'+ arrFields.join('&') );
 		}
 
 
 		render() {
-			let checkboxes = this.getSubscriptionCheckboxes();
-			return(
-				<div className="container">
-				<form id="my-form" className="p-3" noValidate >
-					<h3>New User</h3>
-					<div className="form-row">
-						<div className="col-md-6">
-							<NU.input type="text" fieldName="name" field={this.state.fields.name} handleChange={this.handleChange} />
-							<NU.input type="text" fieldName="address" field={this.state.fields.address} handleChange={this.handleChange} />
-							<NU.input type="text" fieldName="city" field={this.state.fields.city} handleChange={this.handleChange} />
-							<NU.select options={this.state.states} fieldName='state' field={this.state.fields.state} handleChange={this.handleChange} />
-							<NU.input type="number" fieldName="zip" field={this.state.fields.zip} handleChange={this.handleChange} />
-						</div>
-						<div className="col-md-6">
-							<NU.input type="number" fieldName="email" field={this.state.fields.email} handleChange={this.handleChange} />
-							<NU.input type="tel" fieldName="phone" field={this.state.fields.phone} handleChange={this.handleChange} />
-							<NU.input type="username" fieldName="username" field={this.state.fields.username} handleChange={this.handleChange} />
-							<NU.input type="password" fieldName="password" field={this.state.fields.password} handleChange={this.handleChange} />
-							<NU.input type="password" fieldName="passwordConfirm" field={this.state.fields.passwordConfirm} handleChange={this.handleChange} />
-						</div>
-					</div>
-					<div className="form-row">
-						<button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handleSubmit}>Submit</button>
-					</div>
-					<div className="form-row mt-4">
-						<h4>Other Stuff</h4>
-						<div className="form-group">
-							<small className=" form-text">
-								We have the highest respect for the personal data of our customers. With that in mind, we reserve the right to sell that data to anybody who wants it, for any reason and without informing you. You can rest assured that your data is safe with us, and that any leak of your personal data will come from some third-party customer of ours and not our own servers.
-							</small>
-							<small className=" form-text">
-								Please select your privacy and marketing preferences below. Bear in mind that lower settings could result in voids of warranties and refusal of specific services to be named later.
-							</small>
-						</div>
-					</div>
-					<div className="form-row">
-						<div className="col-md-6">
-							<div className=" form-text mb-3">How much of your personal data can we use?</div>
-							<NU.radioGroup fieldName="personalDataSetting" field={this.state.fields.personalDataSetting} inline={true} handleChange={this.handleChange} />
-						</div>
-						<div className="col-md-6">
-							<div className=" form-text mb-3">How may we contact you?</div>
-							<div className="form-group">
-								<NU.checkbox labelText={this.state.fields.contactPhone.placeholder} fieldName="contactPhone" checked={this.state.fields.contactPhone.value} inline={true} handleChange={this.handleChange} />
-								<NU.checkbox labelText={this.state.fields.contactEmail.placeholder} fieldName="contactEmail" checked={this.state.fields.contactEmail.value} inline={true} handleChange={this.handleChange} />
-								<NU.checkbox labelText={this.state.fields.contactVisit.placeholder} fieldName="contactVisit" checked={this.state.fields.contactVisit.value} inline={true} handleChange={this.handleChange} />
+			let markup = null;
+			if(this.state.submitted) {
+				markup = <p>Form was submitted.</p>
+			} else {
+				let checkboxes = this.getSubscriptionCheckboxes();
+				markup =
+					<div className="container">
+					<form id="my-form" className="p-3" noValidate >
+						<h3>New User</h3>
+						<div className="form-row">
+							<div className="col-md-6">
+								<NU.input type="text" fieldName="name" field={this.state.fields.name} handleChange={this.handleChange} />
+								<NU.input type="text" fieldName="address" field={this.state.fields.address} handleChange={this.handleChange} />
+								<NU.input type="text" fieldName="city" field={this.state.fields.city} handleChange={this.handleChange} />
+								<NU.select options={this.state.states} fieldName='state' field={this.state.fields.state} handleChange={this.handleChange} />
+								<NU.input type="number" fieldName="zip" field={this.state.fields.zip} handleChange={this.handleChange} />
+							</div>
+							<div className="col-md-6">
+								<NU.input type="email" fieldName="email" field={this.state.fields.email} handleChange={this.handleChange} />
+								<NU.input type="tel" fieldName="phone" field={this.state.fields.phone} handleChange={this.handleChange} />
+								<NU.input type="username" fieldName="username" field={this.state.fields.username} handleChange={this.handleChange} />
+								<NU.input type="password" fieldName="password" field={this.state.fields.password} handleChange={this.handleChange} />
+								<NU.input type="password" fieldName="passwordConfirm" field={this.state.fields.passwordConfirm} handleChange={this.handleChange} />
 							</div>
 						</div>
-					</div>
-					<div className="form-row">
-						<div className="col mb-3">
-							<button type="button" className="btn btn-primary" onClick={this.selectAllBoxes}>Select All</button>
+						<div className="form-row">
+							<button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handleSubmit}>Submit</button>
 						</div>
+						<div className="form-row mt-4">
+							<h4>Other Stuff</h4>
+							<div className="form-group">
+								<small className=" form-text">
+									We have the highest respect for the personal data of our customers. With that in mind, we reserve the right to sell that data to anybody who wants it, for any reason and without informing you. You can rest assured that your data is safe with us, and that any leak of your personal data will come from some third-party customer of ours and not our own servers.
+								</small>
+								<small className=" form-text">
+									Please select your privacy and marketing preferences below. Bear in mind that lower settings could result in voids of warranties and refusal of specific services to be named later.
+								</small>
+							</div>
+						</div>
+						<div className="form-row">
+							<div className="col-md-6">
+								<div className=" form-text mb-3">How much of your personal data can we use?</div>
+								<NU.radioGroup fieldName="personalDataSetting" field={this.state.fields.personalDataSetting} inline={true} handleChange={this.handleChange} />
+							</div>
+							<div className="col-md-6">
+								<div className=" form-text mb-3">How may we contact you?</div>
+								<div className="form-group">
+									<NU.checkbox labelText={this.state.fields.contactPhone.placeholder} fieldName="contactPhone" checked={this.state.fields.contactPhone.value} inline={true} handleChange={this.handleChange} />
+									<NU.checkbox labelText={this.state.fields.contactEmail.placeholder} fieldName="contactEmail" checked={this.state.fields.contactEmail.value} inline={true} handleChange={this.handleChange} />
+									<NU.checkbox labelText={this.state.fields.contactVisit.placeholder} fieldName="contactVisit" checked={this.state.fields.contactVisit.value} inline={true} handleChange={this.handleChange} />
+								</div>
+							</div>
+						</div>
+						<div className="form-row">
+							<div className="col mb-3">
+								<button type="button" className="btn btn-primary" onClick={this.selectAllBoxes}>Select All</button>
+							</div>
+						</div>
+						<div className="form-row">
+							{checkboxes}
+						</div>
+					</form>
 					</div>
-					<div className="form-row">
-						{checkboxes}
-					</div>
-				</form>
-				</div>
-			);
+				;
+			}
+			return markup;
 		}
 	},
 	input : class extends React.Component {
 		render() {
+			let validationClass, errorMessage = null;
+			switch(this.props.field.validated) {
+				case true:
+					validationClass = ' is-valid';
+					break;
+				case false:
+					validationClass = ' is-invalid';
+					errorMessage = <small className="text-danger">{this.props.field.errorMessage}</small>;
+					break;
+				default:
+					validationClass = '';
+			}
 			let markup = (this.props.type === "username")
 			?
 			<div className="input-group">
 				<div className="input-group-prepend">
 					<div className="input-group-text">@</div>
 				</div>
-			<input type="text" className="form-control form-control-lg is-invalid" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
+			<input type="text" className={"form-control form-control-lg"+validationClass} name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			</div>
 			:
-			<input type={this.props.type} className="form-control form-control-lg is-invalid" name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
+			<input type={this.props.type} className={"form-control form-control-lg"+validationClass} name={this.props.fieldName} placeholder={this.props.field.placeholder} onChange={this.props.handleChange} />
 			;
 
 			return(
 				<div className="form-group">
 					<label className="sr-only">{this.props.field.labelText}</label>
 					{markup}
-					<small className="text-danger">{this.props.field.errorMessage}</small>
+					{errorMessage}
 				</div>
 			)
 		}
@@ -336,17 +385,31 @@ let NU = {
 	},
 	select : class extends React.Component {
 		render() {
+
+			let validationClass, errorMessage = null;
+			switch(this.props.field.validated) {
+				case true:
+					validationClass = ' is-valid';
+					break;
+				case false:
+					validationClass = ' is-invalid';
+					errorMessage = <small className="text-danger">{this.props.field.errorMessage}</small>;
+					break;
+				default:
+					validationClass = '';
+			}
+
 			let listItems = this.props.options.map((item) =>
 				<option key={item.id} value={item.id}>{item.label}</option>
 			);
 			return(
 				<div className="form-group">
 					<label  htmlFor={this.props.fieldName} className="sr-only">{this.props.field.labelText}</label>
-					<select className="form-control form-control-lg is-invalid" id={this.props.fieldName} name={this.props.fieldName} value={this.props.field.value} onChange={this.props.handleChange}>
+					<select className={"form-control form-control-lg"+validationClass} id={this.props.fieldName} name={this.props.fieldName} value={this.props.field.value} onChange={this.props.handleChange}>
 						<option value="">{this.props.field.placeholder}</option>
 						{listItems}
 					</select>
-					<small className="text-danger">{this.props.field.errorMessage}</small>
+					{errorMessage}
 				</div>
 			);
 		}
