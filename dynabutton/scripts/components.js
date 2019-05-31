@@ -85,23 +85,16 @@ class DynaButton extends React.Component {
 			doodad:0,
 			dinglehopper:0
 		}
-
-		//let that = this;
-		//window.getState = function() {
-		//	return that.state;
-		//}
 	}
 
 	_updateTopState(obj) {
 		this.setState(obj);
 	}
+
 	_prevNext(strArrayName, arrayIndex, direction) {
-		//console.log('_prevNext()');
 
 		var limit = this.state.data[strArrayName].length - 1,
 			index;
-
-		//console.log([this.state[arrayIndex], limit]);
 
 		if (direction === 'next') {
 			index = (this.state[arrayIndex] >= limit) ? 0 : (this.state[arrayIndex]) + 1 ;
@@ -112,54 +105,31 @@ class DynaButton extends React.Component {
 		var obj = {};
 		obj[arrayIndex] = index;
 
-		//console.log(obj);
 		this.setState(obj);
 	}
-
-	/*
-	componentDidMount() {
-		console.log('componentDidMount()');
-	}å
-	*/
-
-	/*
-	componentDidUpdate() {
-		console.log('componentDidUpdate()');
-	}
-	*/
-
 
 	render() {
 		let markup = null;
 		markup = 
-			/*
-			<form>
-				<ButtonGroup type="primary" updateTopState={this._updateTopState.bind(this)} />
-				<div className="form-group">
-					<button type="submit" className="btn btn-primary"
-						data-place={this.state.place} 
-					>{this.state.place}</button>
-				</div>
-			</form>
-			*/
 			<div id="steps">
+
 				<h4>Navigate through the things:</h4>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<ButtonGroup array="things" arrayIndex="thing" current={this.state.data.things[this.state.thing]} prevNext={this._prevNext.bind(this)} />
+				<ButtonGroup buttonType="primary" array="things" arrayIndex="thing" current={this.state.data.things[this.state.thing]} prevNext={this._prevNext.bind(this)} />
 
 
 				<h4>Search through the stuff:</h4>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<ButtonGroup array="stuffs" arrayIndex="stuff" current={this.state.data.stuffs[this.state.stuff]} prevNext={this._prevNext.bind(this)} />
+				<ButtonGroup buttonType="danger" array="stuffs" arrayIndex="stuff" current={this.state.data.stuffs[this.state.stuff]} prevNext={this._prevNext.bind(this)} />
 
 
 				<h4>Find the Doodad:</h4>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
-				<ButtonGroup array="doodads" arrayIndex="doodad" current={this.state.data.doodads[this.state.doodad]} prevNext={this._prevNext.bind(this)} />
+				<ButtonGroup buttonType="info" array="doodads" arrayIndex="doodad" current={this.state.data.doodads[this.state.doodad]} prevNext={this._prevNext.bind(this)} />
 
 
 				<h4>Look through the Dinglehoppers</h4>
-				<ButtonGroup array="dinglehoppers" arrayIndex="dinglehopper" current={this.state.data.dinglehoppers[this.state.dinglehopper]} prevNext={this._prevNext.bind(this)} />
+				<ButtonGroup buttonType="warning" array="dinglehoppers" arrayIndex="dinglehopper" current={this.state.data.dinglehoppers[this.state.dinglehopper]} prevNext={this._prevNext.bind(this)} />
 
 				<h4>The Final Button</h4>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a purus orci. Fusce ultricies turpis eu velit faucibus hendrerit. Nulla egestas urna ac sapien varius efficitur.</p>
@@ -192,29 +162,14 @@ class ButtonGroup extends React.Component {
 		return(
 				<div className="form-group">
 					<div className="btn-group btn-group-lg mb-2" role="group" aria-label="Basic example">
-						<button type="button" className="btn btn-secondary" onClick={this._goPrev.bind(this)}><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
-						<button type="button" className="btn btn-secondary" onClick={this._goNext.bind(this)}><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
+						<button type="button" className={"btn btn-"+this.props.buttonType} onClick={this._goPrev.bind(this)}><i className="fa fa-lg fa-chevron-circle-left" aria-hidden="true"></i></button>
+						<button type="button" className={"btn btn-"+this.props.buttonType} onClick={this._goNext.bind(this)}><i className="fa fa-lg fa-chevron-circle-right" aria-hidden="true"></i></button>
 					</div>
 					<p className="mb-4"><strong>{this.props.current.name}</strong>: {this.props.current.desc}</p>
 				</div>
 			);
 	}
 }
-/*
-class ButtonGroup extends React.Component {
-	render() {
-		return(
-				<div className="form-group">
-					<div className="btn-group" role="group" aria-label="Placement">
-						<PlaceButton type="secondary" place="first" updateTopState={this.props.updateTopState} />
-						<PlaceButton type="secondary" place="second" updateTopState={this.props.updateTopState} />
-						<PlaceButton type="secondary" place="third" updateTopState={this.props.updateTopState} />
-					</div>
-				</div>
-			);
-	}
-}
-*/
 
 class SubmitButton extends React.Component {
 	_handleClick() {

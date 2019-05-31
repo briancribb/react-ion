@@ -1,0 +1,109 @@
+html, body {
+	position:relative;
+}
+/*
+img[width],
+img[height] {
+	max-width: 100%;
+	height:auto;
+}
+*/
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Helpers
+================================ */
+
+.apply-rhythm {
+	margin-bottom:$spacer!important;
+}
+
+.remove-rhythm {
+	margin-bottom:0!important;
+}
+
+/* Layout
+================================
+*/
+.site-container {
+	position:relative;
+	padding-top: $spacer;
+}
+
+
+/* Main Footer
+================================ */
+.main-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: auto;
+	background-color: #acaaca;
+}
+	.main-footer-content {
+		border-top: 1px solid #337ab7;
+		padding:1rem;
+	}
+
+/* Bootstrap style overrides
+================================
+These are styles which override the Bootstrap default framework.
+For example, changing the padding for containers.
+*/
+
+.container {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+input {
+	max-width:100%;
+}
+
+/* Transitions and Transformations
+================================ */
+
+.trans-right {
+	-webkit-transition:right .25s linear;
+	transition:right .25s linear;
+}
+.trans-padding {
+	-webkit-transition:padding .25s linear;
+	transition:padding .25s linear;
+}
+.trans-bg-position {
+	-webkit-transition:background-position .5s linear;
+	transition:background-position .5s linear;
+}
+
+/* Typography
+================================ */
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 576px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  html {
+    font-size: 28px;
+  }
+}
