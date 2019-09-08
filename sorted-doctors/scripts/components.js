@@ -1,66 +1,66 @@
 // Actions
 function changeTitle(title) {
-  return {
-    type:'CHANGE_TITLE',
-    title
-  }
+	return {
+		type:'CHANGE_TITLE',
+		title
+	}
 }
 function _addRow(arrRows = [], objRow) {
-  return {
-    type:'ADD_ROW',
-    rows: arrRows.concat(objRow)
-  }
+	return {
+		type:'ADD_ROW',
+		rows: arrRows.concat(objRow)
+	}
 }
 function _removeRow(arrRows = [], index) {
-  let arrNew = [].concat(arrRows);
+	let arrNew = [].concat(arrRows);
 
-  arrNew.splice(index,1);
+	arrNew.splice(index,1);
 
-  return {
-    type:'REMOVE_ROW',
-    rows: arrNew
-  }
+	return {
+		type:'REMOVE_ROW',
+		rows: arrNew
+	}
 }
 function _sortTable(table, sortBy="number") {
-  // This will return an object which is propertly set up for the store's 
-  // dispatch method.
-  return {
-    type:'SORT_TABLE',
-    table: !table ? null : {
-      columns: table.columns,
-      rows: sortArray(table.rows, sortBy)
-    }
-  }
+	// This will return an object which is propertly set up for the store's 
+	// dispatch method.
+	return {
+		type:'SORT_TABLE',
+		table: !table ? null : {
+			columns: table.columns,
+			rows: sortArray(table.rows, sortBy)
+		}
+	}
 }
 
 // This will sort an array by the top-level property provided. 
 // Good for numbers and strings.
 function sortArray(arrSource = [], sortBy = "number") {
 
-  let arrSorted = [].concat(arrSource);
-  // sort by name
-  return arrSorted.sort(function(a, b) {
-    // Leave numbers alone, but make strings case-insensitive.
-    let itemA = (Number.isInteger(a[sortBy])) ? a[sortBy] : a[sortBy].toUpperCase();
-    let itemB = (Number.isInteger(b[sortBy])) ? b[sortBy] : b[sortBy].toUpperCase();
+	let arrSorted = [].concat(arrSource);
+	// sort by name
+	return arrSorted.sort(function(a, b) {
+		// Leave numbers alone, but make strings case-insensitive.
+		let itemA = (Number.isInteger(a[sortBy])) ? a[sortBy] : a[sortBy].toUpperCase();
+		let itemB = (Number.isInteger(b[sortBy])) ? b[sortBy] : b[sortBy].toUpperCase();
 
-    if (itemA < itemB) {
-      return -1;
-    }
-    if (itemA > itemB) {
-      return 1;
-    }
+		if (itemA < itemB) {
+			return -1;
+		}
+		if (itemA > itemB) {
+			return 1;
+		}
 
-    // names must be equal
-    return 0;
-  });
+		// names must be equal
+		return 0;
+	});
 }
 
 
 		// Initial state object
 const initialState = {
 	title: "My Sorted Redux Table",
-  sortBy: 'number',
+	sortBy: 'number',
 	table: {
 		columns : [
 			{
@@ -151,39 +151,39 @@ const initialState = {
 
 // Reducer
 function tableReducer(state = initialState, action) {
-  switch(action.type) {
-    case 'CHANGE_TITLE':
-      // Overriding objects going last-to-first. End result is a new object 
-      // with updated values.
-      return Object.assign(
-        {},
-        state,
-        {title: !action.title ? initialState.title : action.title}
-      );
-    case 'SORT_TABLE':
-      // The sortTable function generates the action object for this case.
-      return Object.assign(
-        {},
-        state,
-        {
-          table: action.table || initialState.table
-        }
-      );
-    case 'ADD_ROW':
-      // Return object works the same for add/remove, so just fall through to the next case.
-    case 'REMOVE_ROW':
-      return {
-        ...{},
-        ...state,
-        table: {
-          ...state.table,
-          rows: action.rows || initialState.table.rows
-        }
-      }
+	switch(action.type) {
+		case 'CHANGE_TITLE':
+			// Overriding objects going last-to-first. End result is a new object 
+			// with updated values.
+			return Object.assign(
+				{},
+				state,
+				{title: !action.title ? initialState.title : action.title}
+			);
+		case 'SORT_TABLE':
+			// The sortTable function generates the action object for this case.
+			return Object.assign(
+				{},
+				state,
+				{
+					table: action.table || initialState.table
+				}
+			);
+		case 'ADD_ROW':
+			// Return object works the same for add/remove, so just fall through to the next case.
+		case 'REMOVE_ROW':
+			return {
+				...{},
+				...state,
+				table: {
+					...state.table,
+					rows: action.rows || initialState.table.rows
+				}
+			}
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }
 
 
@@ -192,7 +192,7 @@ const store = Redux.createStore(tableReducer);
 
 store.subscribe(() => {
 	let localStore = store.getState();
-  $('#table-title').html(localStore.title);
+	$('#table-title').html(localStore.title);
 	$('#table-container').empty().append( drawTable(localStore.table) );
 });
 
@@ -277,23 +277,23 @@ function addListeners() {
 			}
 		},
 		click: function(evt) {
-      console.log('click', evt);
+			console.log('click', evt);
 			let $target = $(evt.target);
 			// Handle click on the table's header cells.
 			if ( $target.closest('th')[0]) {
 				// Using closest method in case the user clicks on the cell's children.
 				let table = store.getState().table,
 						sortBy = $target.closest('th').data('sortby');
-        console.log('table, sortBy', table, sortBy);
+				console.log('table, sortBy', table, sortBy);
 				store.dispatch(_sortTable(table, sortBy))          
 			}
 			if (evt.target.id === 'add-row-submit') {
-        let first = $('#add-row-first').val(),
-            last = $('#add-row-last').val(),
-            number = parseInt( $('#add-row-number').val() )
+				let first = $('#add-row-first').val(),
+						last = $('#add-row-last').val(),
+						number = parseInt( $('#add-row-number').val() )
 
-        // Super basic validation.
-        if ( !first || !last || !number ) return;
+				// Super basic validation.
+				if ( !first || !last || !number ) return;
 
 				store.dispatch(
 					_addRow(
@@ -305,7 +305,7 @@ function addListeners() {
 						}
 					)
 				);
-        $('.input-add-row').val('');
+				$('.input-add-row').val('');
 			}
 			if ( $target.closest('.btn-remove-row')[0] ) {
 				console.log($target.closest('.btn-remove-row').data('index'));
@@ -326,5 +326,5 @@ function addListeners() {
 $( document ).ready(function() {
 	store.dispatch({type: 'CHANGE_TITLE'});
 	store.dispatch({type: 'SORT_TABLE'});
-  addListeners();
+	addListeners();
 });
