@@ -19,9 +19,12 @@ let Autocomplete = class extends React.Component {
 
 	_handleClick(evt) {
 		//console.log('_handleClick() - ', evt.target.previousSibling.value.length);
-		let input = evt.target.previousSibling;
-		if (!input.value || input.value.length < this.state.minimum) return;
+		evt.preventDefault();
+		this._handleCheck(evt);
 	}
+
+
+
 	_handleKeyDown(evt) {
 		/*
 		The input will submit like a form when the Enter key is pressed. This happens 
@@ -29,18 +32,18 @@ let Autocomplete = class extends React.Component {
 		*/
 		if (evt.keyCode === 13) {
 			evt.preventDefault();
-			this._handleCheck();
+			this._handleCheck(evt);
 		}
 	}
 	_handleChange(evt) {
 		this.setState({value: evt.target.value});
-		if (evt.target.value.length < this.state.minimum) return;
 		//if (evt.keyCode === 13) {
-			this._handleCheck();
+			this._handleCheck(evt);
 		//}
 	}
 
-	_handleCheck(str) {
+	_handleCheck(evt) {
+		if (!this.state.value || this.state.value.length < this.state.minimum) return;
 		this._getMatches();
 	}
 
