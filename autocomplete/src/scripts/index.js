@@ -12,7 +12,12 @@ let APP = {
 			this.data = this.transformData(data);
 			console.log('APP init done', this);
 			ReactDOM.render(
-				<RC.Autocomplete parent={RC} arrData={this.data} mainKey="label" />, document.getElementById('app')
+				<RC.Autocomplete 
+					parent={RC} 
+					arrData={this.data} 
+					mainKey="label" 
+					minimum="3" 
+				/>, document.getElementById('app')
 			);
 		});
 	},
