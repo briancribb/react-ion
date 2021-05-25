@@ -7,7 +7,8 @@ let Autocomplete = class extends React.Component {
 		arrData 		: REQUIRED - And array of strings or objects. 
 		mainKey 		: OPTIONAL - The key in an array item to match. If not included, all keys will be checked and the first one will be displayed.
 		minimum 		: OPTIONAL - Defaults to 3. Number of characters in the input before a search is done.
-		placeholder="3" : OPTIONAL - Placeholder text for the input.
+		width 	 		: OPTIONAL - If included, will add an inline style to the input's container.
+		placeholder     : OPTIONAL - Placeholder text for the input.
 		iconClass 		: OPTIONAL - If you include this, the input will paired with an icon button. This assumes that you've included the appropriate CSS. 
 		inputClasses 	: OPTIONAL - Any classes you want on the input. Bootstrap classes, for example.
 
@@ -22,10 +23,12 @@ let Autocomplete = class extends React.Component {
 		this.state = {
 			value: 			'',
 			placeholder: 	this.props.placeholder || "Type something...",
+			matches: 		[],
 			isDisabled: 	this.props.isDisabled === false ? false : true// undefined means true
 		};
 		this._handleChange   = this._handleChange.bind(this);
 		this._getMatches     = this._getMatches.bind(this);
+		this._getMatchMarkup = this._getMatchMarkup.bind(this);
 	}
 
 	_handleChange(evt) {
@@ -33,6 +36,8 @@ let Autocomplete = class extends React.Component {
 		let objNew = {value: evt.target.value};
 		if (evt.target.value && evt.target.value.length >= minimum) {
 			objNew.matches = this._getMatches(evt.target.value);
+		} else {
+			objNew.matches = [];
 		}
 		this.setState(objNew);
 	}
@@ -71,15 +76,36 @@ let Autocomplete = class extends React.Component {
 		return arrMatches;
 	}
 
+	_getMatchMarkup() {
+		let markup = null;
+
+		if (this.state.matches && this.state.matches.length) {			
+			let matches = this.state.matches.map((match, index)=>{
+				return (
+					<div key={index}>{match.label}</div>
+				);
+			});
+
+			if (matches.length) {
+				markup = <div>{matches}</div>;
+			}
+		}
+		return markup;
+	}
+
 	render() {
 		// TEMP STUFF =============================
 		let state = this.state;
 		window.getState = function(){return state};
 		// ========================================
 		let markup = null,
-			inputClasses = this.props.inputClasses || '';
+			inputClasses = this.props.inputClasses || '',
+			matches = this._getMatchMarkup();
 		return (
+			<span>
 			<input type="text" className={inputClasses} value={this.state.value} onChange={this._handleChange}  onKeyDown={this._handleKeyDown} placeholder={this.state.placeholder} aria-label={this.state.placeholder} />
+			{matches}
+			</span>
 		);
 	}
 }
