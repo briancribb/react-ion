@@ -1,8 +1,24 @@
-html, body {
-	margin:0;
-	padding:0;
-}
+.rc-ac {
+	position: relative;
+	& > input {
 
-.wrapper {
-	
+	}
+	& > ul.rc-ac-matchgroup {
+		list-style-type: none;
+		margin: 0;
+		padding: .25rem 0 0 0;
+		text-align: left;
+		position: absolute;
+		left:0;
+		top:1.25rem;
+	}
+	& li.rc-ac-match {
+		padding:.125rem;
+	}
+	.rc-ac-match {
+		padding: .25rem 0;
+		.hl {
+			background: #BADA55;
+		}
+	}
 }

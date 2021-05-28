@@ -24,6 +24,7 @@ let Autocomplete = class extends React.Component {
 			value: 			'',
 			placeholder: 	this.props.placeholder || "Type something...",
 			matches: 		[],
+			inputClasses: 	this.props.inputClasses ? ' '+this.props.inputClasses : '',
 			isDisabled: 	this.props.isDisabled === false ? false : true// undefined means true
 		};
 		this._handleChange   = this._handleChange.bind(this);
@@ -78,16 +79,44 @@ let Autocomplete = class extends React.Component {
 
 	_getMatchMarkup() {
 		let markup = null;
+		let value = this.state.value;
 
-		if (this.state.matches && this.state.matches.length) {			
+		if (this.state.matches && this.state.matches.length) {
+			console.log('matches', this.state.matches);
+			let regex = new RegExp(value, 'ig')		
+	
 			let matches = this.state.matches.map((match, index)=>{
+				console.log('stuff', match, match[this.props.mainKey]);
+				/*
+				ReactJS doesn't like to inject HTML directly, so we're going to make 
+				an array of spans out of each match. This will allow us to highlight 
+				the part of the match string that actually matched.
+				*/
+
+				// Wrap the search string with triple pipes in the string then split it.
+				let strTemp = match[this.props.mainKey].replaceAll(regex,(item)=>{
+					return '|||'+item+'|||';
+				});
+				let arrTemp = strTemp.split('|||')
+
+				/*
+				Could be an empty string at lead or tail. Ignore those. Wrap everything in 
+				a span, with the matching parts highlighted with a class.
+				*/
+				let matchWithSpans = arrTemp.map((str, index)=>{
+					if (str.length) {
+						let strClass = str.toLowerCase() === value.toLowerCase() ? 'rc-ac-match hl' : 'rc-ac-match reg';
+						return <span className={strClass} key={index}>{str}</span>
+					}
+				});
+
 				return (
-					<div key={index}>{match.label}</div>
+					<li className="rc-ac-match" key={index}>{matchWithSpans}</li>
 				);
 			});
 
 			if (matches.length) {
-				markup = <div>{matches}</div>;
+				markup = <ul className="rc-ac-matchgroup">{matches}</ul>;
 			}
 		}
 		return markup;
@@ -99,10 +128,10 @@ let Autocomplete = class extends React.Component {
 		window.getState = function(){return state};
 		// ========================================
 		let markup = null,
-			inputClasses = this.props.inputClasses || '',
+			inputClasses = 'rc-ac-input' + this.state.inputClasses,
 			matches = this._getMatchMarkup();
 		return (
-			<span>
+			<span className="rc-ac">
 			<input type="text" className={inputClasses} value={this.state.value} onChange={this._handleChange}  onKeyDown={this._handleKeyDown} placeholder={this.state.placeholder} aria-label={this.state.placeholder} />
 			{matches}
 			</span>
