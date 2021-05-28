@@ -1,4 +1,17 @@
-html, body {
-  margin: 0;
-  padding: 0; }
+.rc-ac {
+  position: relative; }
+  .rc-ac > ul.rc-ac-matchgroup {
+    list-style-type: none;
+    margin: 0;
+    padding: .25rem 0 0 0;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 1.25rem; }
+  .rc-ac li.rc-ac-match {
+    padding: .125rem; }
+  .rc-ac .rc-ac-match {
+    padding: .25rem 0; }
+    .rc-ac .rc-ac-match .hl {
+      background: #BADA55; }
 
