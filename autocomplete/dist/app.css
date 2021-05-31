@@ -1,17 +1,34 @@
 .rc-ac {
-  position: relative; }
-  .rc-ac > ul.rc-ac-matchgroup {
-    list-style-type: none;
-    margin: 0;
-    padding: .25rem 0 0 0;
-    text-align: left;
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  box-sizing: border-box; }
+  .rc-ac * {
+    box-sizing: border-box; }
+  .rc-ac > input {
+    width: 100%; }
+  .rc-ac > .rc-ac-matchgroup {
+    width: 100%;
     position: absolute;
     left: 0;
-    top: 1.25rem; }
+    top: 1.25rem;
+    max-height: 150px;
+    overflow: scroll; }
+    .rc-ac > .rc-ac-matchgroup ul {
+      list-style-type: none;
+      margin: 0;
+      padding: .25rem 0 0 0;
+      text-align: left;
+      width: 100%; }
   .rc-ac li.rc-ac-match {
-    padding: .125rem; }
-  .rc-ac .rc-ac-match {
-    padding: .25rem 0; }
-    .rc-ac .rc-ac-match .hl {
-      background: #BADA55; }
+    padding: .125rem;
+    cursor: pointer; }
+    .rc-ac li.rc-ac-match span {
+      pointer-events: none; }
+    .rc-ac li.rc-ac-match span.hl {
+      background: #FFFF00; }
+    .rc-ac li.rc-ac-match:hover {
+      background: #ddd; }
+      .rc-ac li.rc-ac-match:hover span {
+        background: none; }
 
