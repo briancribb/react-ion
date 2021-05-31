@@ -1,24 +1,45 @@
 .rc-ac {
 	position: relative;
-	& > input {
+	display: inline-block;
+    text-align: left;
+    box-sizing: border-box;
+    & * {
+    	box-sizing: border-box;
+    }
 
+	& > input {
+		width: 100%;
 	}
-	& > ul.rc-ac-matchgroup {
-		list-style-type: none;
-		margin: 0;
-		padding: .25rem 0 0 0;
-		text-align: left;
+
+	& > .rc-ac-matchgroup {
+		width:100%;
 		position: absolute;
 		left:0;
 		top:1.25rem;
+		max-height: 150px;
+		overflow:scroll;
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: .25rem 0 0 0;
+			text-align: left;
+			width:100%;
+		}
 	}
 	& li.rc-ac-match {
 		padding:.125rem;
-	}
-	.rc-ac-match {
-		padding: .25rem 0;
-		.hl {
-			background: #BADA55;
+		cursor:pointer;
+		span {
+			pointer-events:none;
+		}
+		span.hl {
+			background: #FFFF00;
+		}
+		&:hover {
+			background: #ddd;
+			span {
+				background:none;
+			}
 		}
 	}
 }

@@ -8,6 +8,11 @@ let APP = {
 	},
 	init: function() {
 		//this.addListeners();
+
+		let propFunc = function(evt) {
+			console.log('I was passed in!');
+		}
+
 		this.getData().then((data) => {
 			this.data = this.transformData(data);
 			console.log('APP init done', this);
@@ -17,6 +22,7 @@ let APP = {
 					arrData={this.data} 
 					mainKey="label" 
 					minimum="3" 
+					onSelect={propFunc} 
 				/>, document.getElementById('app')
 			);
 		});
