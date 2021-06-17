@@ -11,9 +11,9 @@ let Autocomplete = class extends React.Component {
         placeholder     : OPTIONAL - Placeholder text for the input.
         inputClasses    : OPTIONAL - Any classes you want on the input. Bootstrap classes, for example.
         isDisabled      : OPTIONAL - If true, the input will be disabled.
-        onSelect        : OPTIONAL - function that fires when a result is selected.
         highlightColor  : OPTIONAL - The color of matched words in results.
-
+        onSelect        : OPTIONAL - function that fires when a result is selected.
+        handleMatches   : OPTIONAL - If a function is passed in here, it will run instead of the normal dropdown that
     ReactDOM.render(
         <RC.Autocomplete 
             prop={value} 
@@ -23,20 +23,20 @@ let Autocomplete = class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value           : '',
-            minimum         : this.props.minimum || 3,
-            width           : this.props.width || '200px',
-            placeholder     : this.props.placeholder || "Type something...",
-            matches         : [],
-            inputClasses    : this.props.inputClasses ? ' '+this.props.inputClasses : '',
-            highlightColor  : this.props.highlightColor || '#FFFF00',
-            onSelect        : this.props.onSelect || null,
-            isDisabled      : this.props.isDisabled === false ? false : true// undefined means true
+            value                   : '',
+            minimum                 : this.props.minimum || 3,
+            width                   : this.props.width || '200px',
+            placeholder             : this.props.placeholder || "Type something...",
+            matches                 : [],
+            inputClasses            : this.props.inputClasses ? ' '+this.props.inputClasses : '',
+            highlightColor          : this.props.highlightColor || '#FFFF00',
+            onSelect                : this.props.onSelect || null,
+            isDisabled              : this.props.isDisabled === false ? false : true// undefined means true
         };
-        this._handleChange   = this._handleChange.bind(this);
-        this._getMatches     = this._getMatches.bind(this);
-        this._getMatchMarkup = this._getMatchMarkup.bind(this);
-        this._onSelect       = this._onSelect.bind(this);
+        this._handleChange          = this._handleChange.bind(this);
+        this._getMatches            = this._getMatches.bind(this);
+        this._getDefaultMatchMarkup = this._getDefaultMatchMarkup.bind(this);
+        this._onSelect              = this._onSelect.bind(this);
     }
 
     _onSelect(evt) {
@@ -92,46 +92,47 @@ let Autocomplete = class extends React.Component {
         return arrMatches;
     }
 
-    _getMatchMarkup() {
+    _getDefaultMatchMarkup(matches) {
+        console.log('_getMatchMarkup()');
         let markup = null;
         let value = this.state.value;
 
-        if (this.state.matches && this.state.matches.length) {
-            let regex = new RegExp(value, 'ig')     
-    
-            let matches = this.state.matches.map((match, index)=>{
-                /*
-                ReactJS doesn't like to inject HTML directly, so we're going to make 
-                an array of spans out of each match. This will allow us to highlight 
-                the part of the match string that actually matched.
-                */
+        if (!matches || !matches.length) return;
+        let regex = new RegExp(value, 'ig')     
 
-                // Wrap the search string with triple pipes in the string then split it.
-                let strTemp = match[this.props.mainKey].replaceAll(regex,(item)=>{
-                    return '|||'+item+'|||';
-                });
-                let arrTemp = strTemp.split('|||')
+        let matchElements = matches.map((match, index)=>{
+            /*
+            ReactJS doesn't like to inject HTML directly, so we're going to make 
+            an array of spans out of each match. This will allow us to highlight 
+            the part of the match string that actually matched.
+            */
 
-                /*
-                Could be an empty string at lead or tail. Ignore those. Wrap everything in 
-                a span, with the matching parts highlighted with a class.
-                */
-                let matchWithSpans = arrTemp.map((str, index)=>{
-                    if (str.length) {
-                        let strClass = str.toLowerCase() === value.toLowerCase() ? 'rc-ac-match hl' : 'rc-ac-match reg';
-                        return <span className={strClass} key={index}>{str}</span>
-                    }
-                });
+            // Wrap the search string with triple pipes in the string then split it.
+            let strTemp = match[this.props.mainKey].replaceAll(regex,(item)=>{
+                return '|||'+item+'|||';
+            });
+            let arrTemp = strTemp.split('|||')
 
-                return (
-                    <li className="rc-ac-match" key={index} onClick={this._onSelect}>{matchWithSpans}</li>
-                );
+            /*
+            Could be an empty string at lead or tail. Ignore those. Wrap everything in 
+            a span, with the matching parts highlighted with a class.
+            */
+            let matchWithSpans = arrTemp.map((str, index)=>{
+                if (str.length) {
+                    let strClass = str.toLowerCase() === value.toLowerCase() ? 'rc-ac-match hl' : 'rc-ac-match reg';
+                    return <span className={strClass} key={index}>{str}</span>
+                }
             });
 
-            if (matches.length) {
-                markup = <div className="rc-ac-matchgroup"><ul>{matches}</ul></div>;
-            }
+            return (
+                <li className="rc-ac-match" key={index} onClick={this._onSelect}>{matchWithSpans}</li>
+            );
+        });
+
+        if (matchElements.length) {
+            markup = <div className="rc-ac-matchgroup"><ul>{matchElements}</ul></div>;
         }
+
         return markup;
     }
 
@@ -140,13 +141,22 @@ let Autocomplete = class extends React.Component {
         let state = this.state;
         window.getState = function(){return state};
         // ========================================
-        let markup = null,
-            inputClasses = 'rc-ac-input' + this.state.inputClasses,
-            matches = this._getMatchMarkup();
+        let matchMarkup = null,
+            inputClasses = 'rc-ac-input' + this.state.inputClasses;
+
+        if (this.state.matches && this.state.matches.length) {
+            if (this.props.handleMatches) {
+                this.props.handleMatches(this.state.matches);
+                matchMarkup = <div className="rc-ac-matchgroup"><ul><li className="rc-ac-match">Check the console.</li></ul></div>;
+            } else {
+                matchMarkup = this._getDefaultMatchMarkup(this.state.matches);
+            }
+        }
+
         return (
             <span className="rc-ac">
-            <input type="text" className={inputClasses} value={this.state.value} onChange={this._handleChange}  onKeyDown={this._handleKeyDown} placeholder={this.state.placeholder} aria-label={this.state.placeholder} />
-            {matches}
+            <input type="text" className={inputClasses} value={this.state.value} onChange={this._handleChange} onKeyDown={this._handleKeyDown} placeholder={this.state.placeholder} aria-label={this.state.placeholder} />
+            {matchMarkup}
             </span>
         );
     }
