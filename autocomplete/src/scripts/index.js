@@ -23,6 +23,7 @@ let APP = {
 					mainKey="label" 
 					minimum="3" 
 					onSelect={propFunc} 
+					handleMatches={function(matches){console.log('handleMatches() was passed in.', matches)}} 
 				/>, document.getElementById('app')
 			);
 		});
